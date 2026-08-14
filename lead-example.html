@@ -7,31 +7,31 @@
 <meta name="description" content="What arrives in the investor's CRM after a seller finishes the funnel: the situation stack, the ranked deal structures, the routing tier, every answer, and the raw payload.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@600;700;800;900&family=Figtree:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
 :root{
   --paper:#F2F6FC; --panel:#FFFFFF; --panel-2:#E9F0FA; --panel-3:#DEE9F7;
   --line:#CFDCEC; --line-2:#B9CCE3;
-  --ink:#0B1A33; --ink-soft:#526480;
-  --navy:#0B1A33; --navy-2:#122A4D; --navy-3:#061021;
-  --act:#FF5C35; --act-2:#E8431C; --act-soft:#FFE4DC;
+  --ink:#101B2D; --ink-soft:#5C6D87;
+  --navy:#101B2D; --navy-2:#1B2C48; --navy-3:#061021;
+  --act:#00B368; --act-2:#009757; --act-soft:#D6F6E8;
   --go:#0EA46B; --go-soft:#D6F5E7;
   --warn:#B45309; --warn-soft:#FDF0DA;
-  --c-estate:#8B5CF6; --c-estate-s:#EFE8FE;
-  --c-clock:#F43F5E;  --c-clock-s:#FFE4E9;
-  --c-fix:#F59E0B;    --c-fix-s:#FDF0D5;
-  --c-rent:#3B82F6;   --c-rent-s:#DEEAFE;
-  --c-move:#10B981;   --c-move-s:#D5F5E9;
-  --c-look:#06B6D4;   --c-look-s:#D2F3F9;
-  --r:16px;
+  --c-estate:#7C5CFF; --c-estate-s:#EFEBFF;
+  --c-clock:#FF3B5C;  --c-clock-s:#FFE5EA;
+  --c-fix:#FFB300;    --c-fix-s:#FFF2D4;
+  --c-rent:#2E90FF;   --c-rent-s:#E2EFFF;
+  --c-move:#12C48B;   --c-move-s:#D9F8EE;
+  --c-look:#00BBD6;   --c-look-s:#D7F4FA;
+  --r:20px;
   --sh-sm:0 1px 2px rgba(11,26,51,.07);
   --sh:0 3px 8px rgba(11,26,51,.07), 0 16px 38px rgba(11,26,51,.10);
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--paper);color:var(--ink);line-height:1.55;font-size:15.5px;
-  font-family:"Plus Jakarta Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  font-family:"Figtree",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
   -webkit-font-smoothing:antialiased}
-h1,h2,h3,h4{margin:0;font-family:"Fraunces","Iowan Old Style",Georgia,serif;font-weight:700;
+h1,h2,h3,h4{margin:0;font-family:"Gabarito","Figtree",sans-serif;font-weight:800;
   letter-spacing:-.018em;text-wrap:balance}
 p{margin:0}
 .wrap{max-width:1180px;margin:0 auto;padding:0 20px}
@@ -41,18 +41,18 @@ p{margin:0}
 
 /* ---------- top ---------- */
 .top{color:#fff;padding:38px 0 34px;background:
-  radial-gradient(760px 340px at 8% 0%, rgba(255,92,53,.24), transparent 62%),
-  radial-gradient(680px 340px at 96% 20%, rgba(139,92,246,.24), transparent 62%),
+  radial-gradient(760px 340px at 8% 0%, rgba(18,196,139,.30), transparent 62%),
+  radial-gradient(680px 340px at 96% 20%, rgba(124,92,255,.30), transparent 62%),
   linear-gradient(160deg,var(--navy-3),var(--navy-2))}
 .kicker{display:inline-flex;align-items:center;gap:9px;font-size:11px;font-weight:800;
-  letter-spacing:.19em;text-transform:uppercase;color:#FFB59F}
-.kicker::before{content:"";width:22px;height:2px;background:#FFB59F;border-radius:2px}
-.top h1{margin-top:16px;font-size:clamp(28px,4.2vw,46px);line-height:1.05;max-width:20ch}
+  letter-spacing:.19em;text-transform:uppercase;color:#8FF2CB}
+.kicker::before{content:"";width:22px;height:2px;background:#8FF2CB;border-radius:2px}
+.top h1{margin-top:20px;font-size:clamp(34px,5.2vw,60px);line-height:1;letter-spacing:-.038em;max-width:18ch}
 .top p{margin-top:16px;color:#C3D3E8;font-size:17px;max-width:64ch}
 .sample{display:inline-flex;align-items:center;gap:9px;margin-top:22px;background:rgba(255,255,255,.1);
   border:1px solid rgba(255,255,255,.24);border-radius:999px;padding:8px 16px;font-size:12.5px;
   font-weight:700;color:#E4EDF9}
-.sample i{width:8px;height:8px;border-radius:50%;background:#FFCF5C;display:block}
+.sample i{width:8px;height:8px;border-radius:50%;background:#8FF2CB;display:block}
 
 /* ---------- inbox ---------- */
 .board{display:grid;gap:22px;padding:34px 0 60px}
@@ -83,7 +83,7 @@ p{margin:0}
 .tier{font-size:10.5px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;
   padding:4px 10px;border-radius:6px;white-space:nowrap}
 .tier.A{background:var(--act);color:#fff}
-.tier.B{background:var(--c-fix);color:#3D2600}
+.tier.B{background:var(--c-fix);color:#3D2A00}
 .tier.C{background:var(--c-rent);color:#fff}
 .tier.X{background:#94A3B8;color:#fff}
 
@@ -102,13 +102,13 @@ p{margin:0}
   background:radial-gradient(420px 200px at 92% 0%, var(--glow), transparent 70%)}
 .who .r{position:relative;z-index:1}
 .who .r1{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap}
-.who h2{font-size:29px;line-height:1.1}
+.who h2{font-size:36px;line-height:1.02;letter-spacing:-.034em}
 .who .addr{margin-top:7px;color:#B9CBE2;font-size:15px}
 .who .meta{display:flex;flex-wrap:wrap;gap:18px;margin-top:20px;padding-top:18px;
   border-top:1px solid rgba(255,255,255,.16)}
 .who .meta div{font-size:13px}
 .who .meta b{display:block;font-size:10px;font-weight:800;letter-spacing:.14em;
-  text-transform:uppercase;color:#8FA6C2;margin-bottom:4px;font-family:"Plus Jakarta Sans",sans-serif}
+  text-transform:uppercase;color:#8FA6C2;margin-bottom:4px;font-family:"Figtree",sans-serif}
 .who .meta a{color:#fff;text-decoration:none;font-weight:700}
 .tagrow{display:flex;flex-wrap:wrap;gap:7px;margin-top:16px;position:relative;z-index:1}
 .tagrow span{font-size:11.5px;font-weight:800;padding:5px 12px;border-radius:999px;
@@ -119,7 +119,7 @@ p{margin:0}
 @media(min-width:720px){.verdict{grid-template-columns:1fr 1fr}}
 .rec{border-radius:13px;padding:20px;border:2px solid var(--rc);background:var(--rc-s)}
 .rec .k{font-size:10.5px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:var(--rc)}
-.rec h3{margin-top:10px;font-size:23px;color:var(--ink)}
+.rec h3{margin-top:12px;font-size:28px;color:var(--ink);letter-spacing:-.03em}
 .rec p{margin-top:10px;font-size:14px;color:var(--ink-soft)}
 
 .bars{display:grid;gap:11px}
@@ -133,7 +133,7 @@ p{margin:0}
 /* alerts */
 .alert{border-radius:12px;padding:16px 18px;border:1.5px solid var(--ac);background:var(--ac-s)}
 .alert h4{font-size:12px;font-weight:900;letter-spacing:.13em;text-transform:uppercase;
-  font-family:"Plus Jakarta Sans",sans-serif;color:var(--ac-t)}
+  font-family:"Figtree",sans-serif;color:var(--ac-t)}
 .alert p{margin-top:9px;font-size:14px;color:var(--ac-t)}
 .alert+.alert{margin-top:11px}
 
