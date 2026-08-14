@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Home Sale Options</title>
+<title>Your Home Sale Options</title>
 <meta name="description" content="Behind on payments, inherited a house, or sitting on a property that needs more work than you want to do? Answer a few questions and see which ways of selling actually fit your situation: a cash purchase, carrying the financing yourself, having someone take over the payments, or listing it.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -414,7 +414,7 @@ footer a{color:#A7BACE}
   <div class="hdr-right">
     <a class="hdr-phone" data-cfg-href="phoneHref" href="tel:8888888888">
       <span data-cfg="phone">(888) 888-8888</span><small>Call or text</small></a>
-    <a class="btn btn-act btn-sm hdr-cta" href="#quiz">Show My Options</a>
+    <a class="btn btn-act btn-sm hdr-cta" href="#quiz">See My Options</a>
   </div>
 </div></header>
 
@@ -428,7 +428,7 @@ footer a{color:#A7BACE}
       There are two more, and in some situations they are worth a great deal more money. Tell us what is
       actually going on and we will show you which ones fit your numbers.</p>
     <div class="hero-cta">
-      <a class="btn btn-act" href="#quiz">Show Me My Options</a>
+      <a class="btn btn-act" href="#quiz">See Your Home Sale Options</a>
       <a class="btn btn-line" href="#ways">See All Four Ways</a>
     </div>
     <div class="chips">
@@ -457,7 +457,7 @@ footer a{color:#A7BACE}
   <div class="shell" id="shell">
     <div class="shell-top">
       <div class="row">
-        <div class="t" id="qTitle">Find my options</div>
+        <div class="t" id="qTitle">Your home sale options</div>
         <div class="s" id="qStep">About two minutes</div>
       </div>
       <div class="bar"><i id="qBar"></i></div>
@@ -593,7 +593,7 @@ footer a{color:#A7BACE}
   <div class="guide">
     <div>
       <span class="eyebrow dark">Free, read it before you talk to anyone</span>
-      <h3>The Home Sale Options Guide</h3>
+      <h3>Your Home Sale Options, the guide</h3>
       <p>Twenty pages on what your house is actually worth to you under each of the four structures,
         written for people in a situation rather than people browsing.</p>
       <ul>
@@ -664,7 +664,7 @@ footer a{color:#A7BACE}
     <p>About two minutes of questions, and you will see which of the four structures fit your numbers and
       which ones do not. No obligation, and no commitment to sell.</p>
     <div class="row">
-      <a class="btn btn-act" href="#quiz">Show Me My Options</a>
+      <a class="btn btn-act" href="#quiz">See Your Home Sale Options</a>
       <a class="btn btn-ghost" data-cfg-href="phoneHref" href="tel:8888888888">Call <span data-cfg="phone">(888) 888-8888</span></a>
     </div>
   </div>
@@ -696,7 +696,7 @@ footer a{color:#A7BACE}
 
 <div class="callbar">
   <a class="btn btn-line" data-cfg-href="phoneHref" href="tel:8888888888">Call</a>
-  <a class="btn btn-act" href="#quiz">My Options</a>
+  <a class="btn btn-act" href="#quiz">See My Options</a>
 </div>
 
 <script>
@@ -723,7 +723,7 @@ footer a{color:#A7BACE}
    page, quiz, header, footer and call bar follow.
 --------------------------------------------------------------- */
 var CONFIG = {
-  company:  "Home Sale Options",      // e.g. "Cleveland Cash Offers"
+  company:  "Your Home Sale Options", // swap for the client's own business name
   market:   "the metro area",         // e.g. "Central Texas", "Northwest Florida"
   phone:    "(888) 888-8888",
   phoneHref:"tel:8888888888",
@@ -1130,7 +1130,7 @@ function render(scroll){
   shell.style.setProperty("--accent",m?m.c:"var(--emerald)");
   shell.style.setProperty("--accent-soft",m?m.cs:"var(--emerald-soft)");
   document.getElementById("qTitle").textContent =
-    S.situations.length ? S.situations.map(function(k){return BRANCHES[k].label;}).join(" + ") : "Find my options";
+    S.situations.length ? S.situations.map(function(k){return BRANCHES[k].label;}).join(" + ") : "Your home sale options";
 
   var pct,label;
   if(S.phase==="pick"){ pct=4; label="About two minutes"; }
