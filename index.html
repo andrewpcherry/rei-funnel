@@ -480,6 +480,11 @@ footer a{color:#A7BACE}
   transition:border-color .14s,background .14s,transform .12s}
 .va-chip:hover{border-color:var(--act);background:var(--act-soft);transform:translateY(-2px)}
 .va-chip.go{background:var(--act);border-color:var(--act);color:#fff}
+.va-form{display:grid;gap:10px;width:100%}
+.va-input{width:100%;border:2.5px solid var(--line);border-radius:12px;padding:13px 15px;
+  font-family:"Figtree",sans-serif;font-size:17px;color:var(--ink);background:#fff}
+.va-input:focus{outline:none;border-color:var(--act);box-shadow:0 0 0 3px var(--act-soft)}
+.va-chip.sel{background:var(--ink);border-color:var(--ink);color:#fff}
 .va-mic{display:flex;align-items:center;gap:10px;margin-top:11px;font-size:12.5px;color:var(--ink-soft);
   font-weight:600}
 .va-mic button{background:var(--tint);border:2px solid var(--line);border-radius:999px;width:40px;
@@ -1409,6 +1414,8 @@ function outcomeHtml(){
     +'<div class="grid2">'
     +fld("Full name","fullName","text","name")+fld("Phone","phone","tel","tel")
     +fld("Email","email","email","email")+fld("Property address","address","text","street-address")
+    +fld("Best time to call you","bestTime","text","off")
+    +sel("Call or text first?","contactPref",["A call is fine","Text me first","Either is fine"])
     +'</div>';
 
   /* one notes box, labelled by the primary situation */
@@ -1468,6 +1475,12 @@ function fld(l,n,t,ac){
   return '<div><label class="fl" for="'+n+'">'+esc(l)+'</label>'
     +'<input class="in" id="'+n+'" name="'+n+'" type="'+t+'" autocomplete="'+ac+'"></div>';
 }
+function sel(l,n,opts){
+  return '<div><label class="fl" for="'+n+'">'+esc(l)+'</label>'
+    +'<select class="in" id="'+n+'" name="'+n+'">'
+    + opts.map(function(o){return '<option value="'+esc(o)+'">'+esc(o)+'</option>';}).join("")
+    +'</select></div>';
+}
 function val(id){ var e=document.getElementById(id); return e?e.value.trim():""; }
 
 function submitLead(){
@@ -1490,7 +1503,8 @@ function submitLead(){
     leadTier:t.t,
     tierReason:t.why,
     answers:S.history,
-    contact:{fullName:name,phone:phone,email:email,address:addr},
+    contact:{fullName:name,phone:phone,email:email,address:addr,
+             bestTime:val("bestTime"), contactPreference:val("contactPref")},
     notes:m.extra?val(m.extra.name):"",
     submittedAt:new Date().toISOString(),
     utm:utm()
@@ -1777,6 +1791,16 @@ start();
     return false;
   }
 
+  /* drop what the assistant already collected into the form so the seller
+     is not made to type their number a second time */
+  function prefill(){
+    var map={phone:answers.phone, bestTime:answers.bestTime, contactPref:answers.contactPref};
+    Object.keys(map).forEach(function(id){
+      var el=document.getElementById(id);
+      if(el && map[id]) el.value=map[id];
+    });
+  }
+
   function handoff(){
     close();
     var carried=0, Q=window.funnelQuiz;
@@ -1789,6 +1813,7 @@ start();
         if(seed(Q,"timeline", TIMELINE_MAP[answers.timeline])) carried++;
         if(seed(Q,"equity",   EQUITY_MAP[answers.equity]))     carried++;
         if(Q.showOutcome) Q.showOutcome();   /* skip the rest, go to the contact fields */
+        prefill();
       }
     }catch(e){
       if(window.console) console.warn("[assistant] handoff failed, seller starts the quiz fresh:", e);
@@ -1799,13 +1824,70 @@ start();
     return carried;
   }
 
+  function askCallback(){
+    bot("Of course. What is the best number for one of our representatives to call you back on today, and is there a particular time that would suit you?",
+      callbackForm);
+  }
+
+  function callbackForm(){
+    chips.innerHTML=""; micRow.hidden=true;
+    var wrap=document.createElement("div"); wrap.className="va-form";
+    var inp=document.createElement("input");
+    inp.className="va-input"; inp.type="tel"; inp.placeholder="Your best number";
+    inp.setAttribute("aria-label","Your best number"); inp.setAttribute("autocomplete","tel");
+    wrap.appendChild(inp);
+
+    var chosen="Any time today";
+    var row=document.createElement("div"); row.className="va-chips";
+    ["Any time today","Morning","Afternoon","Evening"].forEach(function(t){
+      var b=document.createElement("button"); b.type="button";
+      b.className="va-chip"+(t===chosen?" sel":""); b.textContent=t;
+      b.onclick=function(){
+        chosen=t;
+        for(var i=0;i<row.children.length;i++) row.children[i].className="va-chip";
+        b.className="va-chip sel";
+      };
+      row.appendChild(b);
+    });
+    wrap.appendChild(row);
+
+    var go=document.createElement("button"); go.type="button";
+    go.className="va-chip go"; go.textContent="That is my number";
+    go.onclick=function(){
+      var v=(inp.value||"").trim();
+      if(v.replace(/\D/g,"").length<7){
+        inp.style.borderColor="var(--coral)";
+        inp.placeholder="A number we can actually reach you on";
+        return;
+      }
+      answers.phone=v; answers.bestTime=chosen;
+      bubble(v+", "+chosen.toLowerCase(),"me");
+      chips.innerHTML="";
+      askPref();
+    };
+    wrap.appendChild(go);
+    chips.appendChild(wrap);
+  }
+
+  function askPref(){
+    bot("Thank you. And would you rather we called you first, or sent you a text first?", function(){
+      setChips([
+        {t:"A call is fine", act:function(){ answers.contactPref="A call is fine"; wrapUp(); }},
+        {t:"Text me first",  act:function(){ answers.contactPref="Text me first";  wrapUp(); }},
+        {t:"Either is fine", act:function(){ answers.contactPref="Either is fine"; wrapUp(); }}
+      ]);
+    });
+  }
+
+  function wrapUp(){
+    bot("Perfect. I will carry all of that across so nobody asks you the same thing twice, and take you straight to the last few details.",
+      function(){ setChips([{t:"Carry on",go:true,act:handoff}]); });
+  }
+
   function closeOut(k){
     setChips([]);
     if(k==="yes"){
-      bot("Good. I will carry over everything you have told me and take you straight to the details, so nobody asks you the same thing twice. Someone will call you back today.",
-        function(){
-          setChips([{t:"Carry on",go:true,act:handoff}]);
-        });
+      askCallback();
     } else {
       bot("No problem. The guide walks through all four routes with the numbers, and it is yours either way. Nobody will chase you.",
         function(){

@@ -231,6 +231,7 @@ var LEADS = [
 {
   id:"L-2291", tier:"A", ago:"6 minutes ago",
   name:"Marcus Whitfield", phone:"(214) 555-0148", email:"m.whitfield@example.com",
+  bestTime:"Any time today", contactPref:"Text me first",
   address:"1408 Hollis Ave, Unit B",
   source:{utm_source:"google", utm_medium:"cpc", utm_campaign:"foreclosure-help", utm_term:"stop foreclosure"},
   situations:["inherited","deadline"], primary:"deadline",
@@ -272,6 +273,7 @@ var LEADS = [
 {
   id:"L-2288", tier:"B", ago:"2 hours ago",
   name:"Denise Alvarado", phone:"(214) 555-0176", email:"dalvarado@example.com",
+  bestTime:"Afternoon", contactPref:"A call is fine",
   address:"77 Kestrel Row",
   source:{utm_source:"facebook", utm_medium:"paid_social", utm_campaign:"tired-landlord"},
   situations:["rental","condition"], primary:"rental",
@@ -310,6 +312,7 @@ var LEADS = [
 {
   id:"L-2284", tier:"C", ago:"Yesterday",
   name:"Ray Coleman", phone:"(214) 555-0193", email:"rcoleman@example.com",
+  bestTime:"Evening", contactPref:"Either is fine",
   address:"9 Bramble Court",
   source:{utm_source:"google", utm_medium:"organic"},
   situations:["comparing"], primary:"comparing",
@@ -382,7 +385,8 @@ function payload(L){
     recommendedStructure:L.recommended,
     structureFit:Object.keys(L.scores).sort(function(a,b){return L.scores[b]-L.scores[a];})
       .map(function(k){return {structure:k, score:L.scores[k], fits:L.scores[k]>0};}),
-    contact:{fullName:L.name, phone:L.phone, email:L.email, address:L.address},
+    contact:{fullName:L.name, phone:L.phone, email:L.email, address:L.address,
+             bestTime:L.bestTime, contactPreference:L.contactPref},
     answers:[].concat.apply([], L.answers.map(function(g){
       return g.rows.map(function(r){return {q:r[0], a:r[1]};});
     })),
@@ -411,6 +415,8 @@ function renderDetail(){
     + '<div class="meta">'
     + '<div><b>Phone</b><a href="tel:'+esc(L.phone)+'">'+esc(L.phone)+'</a></div>'
     + '<div><b>Email</b><a href="mailto:'+esc(L.email)+'">'+esc(L.email)+'</a></div>'
+    + (L.bestTime?'<div><b>Best time</b>'+esc(L.bestTime)+'</div>':'')
+    + (L.contactPref?'<div><b>Prefers</b>'+esc(L.contactPref)+'</div>':'')
     + '<div><b>Received</b>'+esc(L.ago)+'</div>'
     + '<div><b>Source</b>'+esc(L.source.utm_source+" / "+L.source.utm_medium)+'</div>'
     + (L.source.utm_campaign?'<div><b>Campaign</b>'+esc(L.source.utm_campaign)+'</div>':'')
