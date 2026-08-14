@@ -487,8 +487,12 @@ footer a{color:#A7BACE}
 .va-mic button:hover{border-color:var(--act);background:var(--act-soft)}
 .va-mic button.on{background:var(--coral);border-color:var(--coral);color:#fff;
   animation:vaorb .8s ease-in-out infinite}
-.va-note{padding:9px 16px;background:var(--tint-2);font-size:11.5px;color:var(--ink-soft);
-  text-align:center;font-weight:600}
+.va-note{padding:9px 14px;background:var(--tint-2);font-size:11.5px;color:var(--ink-soft);
+  font-weight:600;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.va-voicewrap{display:flex;align-items:center;gap:6px;font-size:11.5px}
+.va-voicewrap select{font-family:"Figtree",sans-serif;font-size:11.5px;font-weight:700;
+  border:1.5px solid var(--line-2);border-radius:8px;padding:4px 6px;background:#fff;
+  color:var(--ink);max-width:150px}
 @media(prefers-reduced-motion:reduce){.va-launch .ring::after,.va-head .orb,.va-typing i{animation:none}}
 </style>
 </head>
@@ -804,7 +808,10 @@ footer a{color:#A7BACE}
       <span id="vaMicHint">Or tap the mic and just say it</span>
     </div>
   </div>
-  <div class="va-note">Demo assistant. It speaks out loud, so check your volume.</div>
+  <div class="va-note">
+    <span>Demo assistant, speaks out loud.</span>
+    <label class="va-voicewrap">Voice <select id="vaVoice" aria-label="Choose a voice"></select></label>
+  </div>
 </div>
 
 <div class="callbar">
@@ -1527,7 +1534,10 @@ window.funnelQuiz = {
   confirmSits: confirmSits,
   answer:      answer,
   queue:       queue,
-  state:       function(){ return S; }
+  state:       function(){ return S; },
+  /* jump past the remaining questions to the result and the contact fields,
+     used when the assistant has already asked enough to be useful */
+  showOutcome: function(){ if(S&&S.primary){ S.phase="outcome"; render(true); } }
 };
 
 applyConfig();
@@ -1556,18 +1566,53 @@ start();
       micHint=document.getElementById("vaMicHint");
   if(!launch||!panel) return;
 
-  var voiceOn=true, started=false, answers={}, voice=null, rec=null, listening=false;
+  var voiceOn=true, started=false, ended=false, answers={}, voice=null, rec=null, listening=false;
 
-  /* ---- speech out ---- */
+  /* ---- speech out ----
+     Ranked British first, and the modern neural engines ahead of the old
+     formant ones, because the legacy voices are what make this sound robotic.
+     Whatever the machine actually has is offered in the picker at the bottom. */
+  var VOICE_RANK=[
+    /Microsoft (Sonia|Libby|Ryan|Thomas|Maisie|Abbi|Bella|Olivia)[^)]*Natural/i,
+    /Google UK English Female/i, /Google UK English Male/i,
+    /^Serena/i, /^Kate/i, /^Stephanie/i, /^Daniel/i, /^Jamie/i, /^Malcolm/i,  /* macOS en-GB */
+    /Microsoft (Aria|Jenny|Guy|Emma)[^)]*Natural/i,
+    /Google US English/i, /^Samantha/i, /^Karen/i, /^Alex/i
+  ];
+  var allVoices=[];
+  function scoreVoice(v){
+    var s=0;
+    for(var i=0;i<VOICE_RANK.length;i++){ if(VOICE_RANK[i].test(v.name)){ s = 100-i; break; } }
+    if(/^en-GB/i.test(v.lang)) s+=40;          /* British, as asked for */
+    if(/natural|neural|premium|enhanced/i.test(v.name)) s+=25;
+    if(/compact|eloquence|espeak/i.test(v.name)) s-=40;
+    return s;
+  }
   function pickVoice(){
     if(!("speechSynthesis" in window)) return;
-    var v=speechSynthesis.getVoices().filter(function(x){return /^en(-|_)/i.test(x.lang);});
-    var pref=["Samantha","Google US English","Google UK English Female","Karen","Serena","Daniel","Alex"];
-    for(var i=0;i<pref.length;i++){
-      var m=v.find(function(x){return x.name.indexOf(pref[i])>=0;});
-      if(m){ voice=m; return; }
-    }
-    voice=v[0]||null;
+    allVoices=speechSynthesis.getVoices().filter(function(x){return /^en(-|_)/i.test(x.lang);});
+    if(!allVoices.length) return;
+    var saved=null;
+    try{ saved=localStorage.getItem("vaVoice"); }catch(e){}
+    var byName=saved&&allVoices.find(function(x){return x.name===saved;});
+    voice = byName || allVoices.slice().sort(function(a,b){return scoreVoice(b)-scoreVoice(a);})[0];
+    buildVoicePicker();
+  }
+  function buildVoicePicker(){
+    var sel=document.getElementById("vaVoice");
+    if(!sel||!allVoices.length) return;
+    sel.innerHTML="";
+    allVoices.slice().sort(function(a,b){return scoreVoice(b)-scoreVoice(a);}).forEach(function(v){
+      var o=document.createElement("option");
+      o.value=v.name; o.textContent=v.name.replace(/ \(.*$/,"")+" ("+v.lang+")";
+      if(voice&&v.name===voice.name) o.selected=true;
+      sel.appendChild(o);
+    });
+    sel.onchange=function(){
+      voice=allVoices.find(function(x){return x.name===sel.value;})||voice;
+      try{ localStorage.setItem("vaVoice",sel.value); }catch(e){}
+      say("Right then, this is how I sound.");
+    };
   }
   if("speechSynthesis" in window){
     pickVoice();
@@ -1578,18 +1623,24 @@ start();
     if(!voiceOn||!("speechSynthesis" in window)){ if(done) done(); return; }
     try{
       speechSynthesis.cancel();
-      var u=new SpeechSynthesisUtterance(text.replace(/\s+/g," "));
-      if(voice) u.voice=voice;
-      u.rate=1.02; u.pitch=1.0;
-      var fired=false;
+      var clean=text.replace(/\s+/g," ").trim();
+      var parts=clean.match(/[^.?!]+[.?!]*/g)||[clean];
+      var fired=false, i=0;
       function finish(){ if(fired) return; fired=true;
         orb.classList.remove("speak"); status.textContent="Your turn"; if(done) done(); }
-      u.onstart=function(){ orb.classList.add("speak"); status.textContent="Speaking"; };
-      u.onend=finish;
-      u.onerror=finish;
-      speechSynthesis.speak(u);
-      /* speechSynthesis drops onend often enough that it cannot be the only path forward */
-      setTimeout(finish, Math.max(3500, text.length*95));
+      function next(){
+        if(i>=parts.length){ finish(); return; }
+        var u=new SpeechSynthesisUtterance(parts[i++].trim());
+        if(voice) u.voice=voice;
+        u.rate=0.97; u.pitch=1.0;          /* a shade under natural pace reads calmer */
+        u.onstart=function(){ orb.classList.add("speak"); status.textContent="Speaking"; };
+        u.onend=next;
+        u.onerror=finish;
+        speechSynthesis.speak(u);
+      }
+      next();
+      /* onend is unreliable across engines, so never let it be the only way forward */
+      setTimeout(finish, Math.max(4000, clean.length*105));
     }catch(e){ if(done) done(); }
   }
 
@@ -1737,19 +1788,21 @@ start();
         carried++;                                                  /* the situation */
         if(seed(Q,"timeline", TIMELINE_MAP[answers.timeline])) carried++;
         if(seed(Q,"equity",   EQUITY_MAP[answers.equity]))     carried++;
+        if(Q.showOutcome) Q.showOutcome();   /* skip the rest, go to the contact fields */
       }
     }catch(e){
       if(window.console) console.warn("[assistant] handoff failed, seller starts the quiz fresh:", e);
     }
     var q=document.getElementById("quiz");
     if(q) q.scrollIntoView({behavior:"smooth",block:"start"});
+    ended=true;
     return carried;
   }
 
   function closeOut(k){
     setChips([]);
     if(k==="yes"){
-      bot("Good. I will carry over what you have told me so nobody asks you the same thing twice. A few more questions on the page and someone will call you back today.",
+      bot("Good. I will carry over everything you have told me and take you straight to the details, so nobody asks you the same thing twice. Someone will call you back today.",
         function(){
           setChips([{t:"Carry on",go:true,act:handoff}]);
         });
@@ -1757,8 +1810,8 @@ start();
       bot("No problem. The guide walks through all four routes with the numbers, and it is yours either way. Nobody will chase you.",
         function(){
           setChips([
-            {t:"Send me the guide",go:true,act:function(){ close(); if(window.getGuide) window.getGuide({preventDefault:function(){}}); }},
-            {t:"Thanks, that's all",act:function(){ bot("Take care. We are here whenever you want to pick it back up."); }}
+            {t:"Send me the guide",go:true,act:function(){ ended=true; close(); if(window.getGuide) window.getGuide({preventDefault:function(){}}); }},
+            {t:"Thanks, that's all",act:function(){ ended=true; bot("Take care. We are here whenever you want to pick it back up."); }}
           ]);
         });
     }
@@ -1797,6 +1850,8 @@ start();
   /* ---- open / close ---- */
   function open(){
     panel.hidden=false; launch.hidden=true;
+    /* reopening after it finished used to show a dead transcript with no buttons */
+    if(ended){ ended=false; started=false; STEP=0; answers={}; body.innerHTML=""; setChips([]); }
     if(!started){
       started=true;
       var name=(window.CONFIG&&window.CONFIG.company)||"Your Home Sale Options";
