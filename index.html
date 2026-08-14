@@ -4,356 +4,458 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Home Sale Options</title>
-<meta name="description" content="Behind on payments, inherited a house, or sitting on a property that needs more work than you want to do? Answer a few questions and see which ways of selling actually fit your situation, including a cash purchase, carrying the financing yourself, having someone take over the payments, or listing it.">
+<meta name="description" content="Behind on payments, inherited a house, or sitting on a property that needs more work than you want to do? Answer a few questions and see which ways of selling actually fit your situation: a cash purchase, carrying the financing yourself, having someone take over the payments, or listing it.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
+/* ============================================================
+   PALETTE
+   Ink navy ground, a coral action colour that nothing else uses,
+   and a six-hue category system where every situation and every
+   deal structure owns its own colour and keeps it everywhere.
+   ============================================================ */
 :root{
-  --surface:#F4F7FB; --panel:#FFFFFF; --panel-2:#EEF3FB; --panel-3:#E4EDF8;
-  --line:#D9E2EE; --ink:#142033; --ink-soft:#5A6879;
-  --midnight:#0B1F3B; --midnight-deep:#061229;
-  --electric:#2563EB; --electric-soft:#DCE7FB;
-  --emerald:#16A34A; --emerald-hover:#12873E; --emerald-soft:#DCFCE7;
-  --orange:#F97316; --orange-soft:#FFE6D1;
-  --coral:#EF4444; --coral-soft:#FEE2E2;
-  --violet:#7C3AED; --violet-soft:#EDE4FE;
-  --sky:#0EA5E9; --sky-soft:#DFF3FD;
-  --amber:#B45309; --amber-soft:#FEF0D6;
-  --r:14px;
-  --sh-sm:0 1px 2px rgba(15,30,55,.06);
-  --sh:0 2px 6px rgba(11,31,59,.06), 0 14px 34px rgba(11,31,59,.09);
-  --sh-lg:0 4px 12px rgba(11,31,59,.08), 0 26px 60px rgba(11,31,59,.15);
-  --sh-cta:0 10px 24px rgba(22,163,74,.30);
+  --paper:#F2F6FC;
+  --panel:#FFFFFF;
+  --panel-2:#E9F0FA;
+  --panel-3:#DEE9F7;
+  --line:#CFDCEC;
+  --line-2:#B9CCE3;
+
+  --ink:#0B1A33;
+  --ink-2:#20344F;
+  --ink-soft:#526480;
+
+  --navy:#0B1A33;
+  --navy-2:#122A4D;
+  --navy-3:#061021;
+
+  /* action */
+  --act:#FF5C35;
+  --act-2:#E8431C;
+  --act-soft:#FFE4DC;
+
+  /* semantic */
+  --go:#0EA46B;
+  --go-soft:#D6F5E7;
+  --warn:#B45309;
+  --warn-soft:#FDF0DA;
+
+  /* categories */
+  --c-estate:#8B5CF6;   --c-estate-s:#EFE8FE;
+  --c-clock:#F43F5E;    --c-clock-s:#FFE4E9;
+  --c-fix:#F59E0B;      --c-fix-s:#FDF0D5;
+  --c-rent:#3B82F6;     --c-rent-s:#DEEAFE;
+  --c-move:#10B981;     --c-move-s:#D5F5E9;
+  --c-look:#06B6D4;     --c-look-s:#D2F3F9;
+
+  --r:16px; --r-sm:11px;
+  --sh-sm:0 1px 2px rgba(11,26,51,.07);
+  --sh:0 3px 8px rgba(11,26,51,.07), 0 16px 38px rgba(11,26,51,.10);
+  --sh-lg:0 6px 16px rgba(11,26,51,.09), 0 30px 68px rgba(11,26,51,.17);
+  --sh-act:0 10px 26px rgba(255,92,53,.38);
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;background:var(--surface);color:var(--ink);line-height:1.55;
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
-  -webkit-font-smoothing:antialiased}
-@media(max-width:760px){body{padding-bottom:72px}}
-h1,h2,h3,h4{margin:0;letter-spacing:-.022em;text-wrap:balance}
+body{margin:0;background:var(--paper);color:var(--ink);line-height:1.55;
+  font-family:"Plus Jakarta Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  -webkit-font-smoothing:antialiased;font-size:16px}
+@media(max-width:760px){body{padding-bottom:74px}}
+h1,h2,h3,h4,h5{margin:0;font-family:"Fraunces","Iowan Old Style","Palatino Linotype",Georgia,serif;
+  font-weight:700;letter-spacing:-.018em;text-wrap:balance;font-optical-sizing:auto}
 p{margin:0}
 a{color:inherit}
 img{max-width:100%}
-.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
-.eyebrow{display:inline-block;font-size:11.5px;font-weight:800;letter-spacing:.2em;
-  text-transform:uppercase;color:var(--emerald)}
-:focus-visible{outline:3px solid var(--electric);outline-offset:2px;border-radius:6px}
+.wrap{max-width:1140px;margin:0 auto;padding:0 20px}
+.eyebrow{display:inline-flex;align-items:center;gap:9px;font-size:11.5px;font-weight:800;
+  letter-spacing:.19em;text-transform:uppercase;color:var(--act);
+  font-family:"Plus Jakarta Sans",sans-serif}
+.eyebrow::before{content:"";width:22px;height:2px;background:var(--act);border-radius:2px}
+.eyebrow.on-dark{color:#FFB59F}
+.eyebrow.on-dark::before{background:#FFB59F}
+:focus-visible{outline:3px solid var(--act);outline-offset:2px;border-radius:6px}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}
   html{scroll-behavior:auto}}
 
-header{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.94);
-  backdrop-filter:saturate(140%) blur(8px);border-bottom:1px solid var(--line)}
+/* ---------- header ---------- */
+header{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.93);
+  backdrop-filter:saturate(150%) blur(10px);border-bottom:1px solid var(--line)}
 header .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;
-  padding-top:13px;padding-bottom:13px}
-.brand{font-weight:900;font-size:18px;letter-spacing:-.03em}
-.brand span{color:var(--emerald)}
-.hdr-right{display:flex;align-items:center;gap:14px}
-.hdr-phone{font-weight:800;font-size:15px;text-decoration:none;white-space:nowrap}
-.hdr-phone small{display:block;font-size:10.5px;font-weight:700;letter-spacing:.1em;
+  padding-top:12px;padding-bottom:12px}
+.brand{display:flex;align-items:center;gap:11px;font-family:"Fraunces",serif;font-weight:800;
+  font-size:19px;letter-spacing:-.03em}
+.brand .mark{width:34px;height:34px;border-radius:10px;flex:0 0 auto;
+  background:linear-gradient(140deg,var(--act),#FF9166 55%,var(--c-fix));
+  box-shadow:0 4px 12px rgba(255,92,53,.34)}
+.hdr-right{display:flex;align-items:center;gap:16px}
+.hdr-phone{font-weight:800;font-size:15.5px;text-decoration:none;white-space:nowrap;
+  font-family:"Plus Jakarta Sans",sans-serif}
+.hdr-phone small{display:block;font-size:10px;font-weight:800;letter-spacing:.14em;
   text-transform:uppercase;color:var(--ink-soft)}
-@media(max-width:620px){.hdr-cta{display:none}}
+@media(max-width:640px){.hdr-cta{display:none}}
 
+/* ---------- buttons ---------- */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;border:0;cursor:pointer;
-  font:inherit;font-weight:800;font-size:16px;padding:15px 26px;border-radius:11px;
-  text-decoration:none;transition:background .15s,transform .1s,box-shadow .15s}
+  font-family:"Plus Jakarta Sans",sans-serif;font-weight:800;font-size:16px;padding:15px 27px;
+  border-radius:var(--r-sm);text-decoration:none;transition:background .16s,transform .1s,box-shadow .16s}
 .btn:active{transform:translateY(1px)}
-.btn-g{background:var(--emerald);color:#fff;box-shadow:var(--sh-cta)}
-.btn-g:hover{background:var(--emerald-hover)}
-.btn-line{background:var(--panel);border:1.5px solid var(--line);color:var(--ink)}
-.btn-line:hover{border-color:var(--ink-soft)}
-.btn-ghost{background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.35);color:#fff}
-.btn-ghost:hover{background:rgba(255,255,255,.18)}
-.btn-sm{font-size:14.5px;padding:11px 18px}
+.btn-act{background:var(--act);color:#fff;box-shadow:var(--sh-act)}
+.btn-act:hover{background:var(--act-2)}
+.btn-go{background:var(--go);color:#fff;box-shadow:0 10px 24px rgba(14,164,107,.32)}
+.btn-line{background:var(--panel);border:1.5px solid var(--line-2);color:var(--ink)}
+.btn-line:hover{border-color:var(--ink-soft);background:var(--panel-2)}
+.btn-ghost{background:rgba(255,255,255,.09);border:1.5px solid rgba(255,255,255,.38);color:#fff}
+.btn-ghost:hover{background:rgba(255,255,255,.17)}
+.btn-sm{font-size:14.5px;padding:11px 19px}
 
-.hero{padding:46px 0 30px;position:relative;overflow:hidden}
-.hero::before,.hero::after{content:"";position:absolute;border-radius:50%;filter:blur(70px);
-  pointer-events:none;z-index:0}
-.hero::before{width:340px;height:340px;background:rgba(37,99,235,.13);top:-120px;left:-90px}
-.hero::after{width:380px;height:380px;background:rgba(249,115,22,.12);bottom:-160px;right:-110px}
-.hero .wrap{position:relative;z-index:1}
-.hero h1{font-size:clamp(31px,5vw,55px);font-weight:900;line-height:1.05;margin-top:15px;max-width:17ch}
-.hero .lede{margin-top:18px;max-width:58ch;font-size:17.5px;color:var(--ink-soft)}
-.hero-cta{display:flex;flex-wrap:wrap;gap:11px;margin-top:26px}
-.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
-.chip{font-size:12px;font-weight:800;padding:6px 12px;border-radius:999px}
-.chip.g{background:var(--emerald-soft);color:var(--emerald)}
-.chip.b{background:var(--electric-soft);color:var(--electric)}
-.chip.o{background:var(--orange-soft);color:#C2410C}
+/* ---------- hero ---------- */
+.hero{position:relative;overflow:hidden;background:
+  radial-gradient(1100px 520px at 12% -8%, rgba(255,92,53,.20), transparent 62%),
+  radial-gradient(900px 480px at 92% 8%, rgba(139,92,246,.22), transparent 60%),
+  radial-gradient(760px 460px at 62% 108%, rgba(6,182,212,.20), transparent 60%),
+  linear-gradient(168deg,var(--navy) 0%,var(--navy-2) 58%,#0A2340 100%);
+  color:#fff;padding:58px 0 66px}
+.hero .wrap{position:relative;z-index:2}
+.hero h1{font-size:clamp(34px,5.4vw,62px);font-weight:800;line-height:1.02;margin-top:18px;max-width:15ch}
+.hero h1 em{font-style:normal;color:#FFCF5C;position:relative;white-space:nowrap}
+.hero .lede{margin-top:20px;max-width:56ch;font-size:18px;color:#C3D3E8}
+.hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.chips{display:flex;flex-wrap:wrap;gap:9px;margin-top:26px}
+.chip{font-size:12px;font-weight:800;padding:7px 14px;border-radius:999px;
+  background:rgba(255,255,255,.11);border:1px solid rgba(255,255,255,.2);color:#E4EDF9}
 
-.trust{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--panel)}
-.trust .wrap{display:grid;gap:0;padding-top:0;padding-bottom:0}
-@media(min-width:760px){.trust .wrap{grid-template-columns:repeat(4,1fr)}}
-.trust div{padding:18px 4px;font-size:14px;font-weight:750;color:var(--ink);
-  display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--line)}
-@media(min-width:760px){.trust div{border-bottom:0;justify-content:center;text-align:center}
+/* four-colour rail under the hero */
+.rail{display:flex;height:6px}
+.rail i{flex:1}
+
+/* trust strip */
+.trust{background:var(--panel);border-bottom:1px solid var(--line)}
+.trust .wrap{display:grid;gap:0}
+@media(min-width:780px){.trust .wrap{grid-template-columns:repeat(4,1fr)}}
+.trust div{padding:22px 6px;display:flex;align-items:center;gap:13px;border-bottom:1px solid var(--line)}
+@media(min-width:780px){.trust div{border-bottom:0;justify-content:center;text-align:left}
   .trust div+div{border-left:1px solid var(--line)}}
 .trust div:last-child{border-bottom:0}
-.trust b{color:var(--emerald);font-size:17px;line-height:1}
+.trust b{font-family:"Fraunces",serif;font-size:30px;font-weight:800;line-height:1;color:var(--tn)}
+.trust span{font-size:13.5px;font-weight:700;color:var(--ink-soft);max-width:15ch}
 
-section{padding:56px 0}
-.sec-h{font-size:clamp(24px,3.4vw,36px);font-weight:900;line-height:1.12;margin-top:13px;max-width:22ch}
-.sec-p{margin-top:14px;max-width:64ch;font-size:16.5px;color:var(--ink-soft)}
+/* ---------- sections ---------- */
+section{padding:62px 0}
+.sec-h{font-size:clamp(26px,3.7vw,40px);font-weight:700;line-height:1.08;margin-top:15px;max-width:010;max-width:21ch}
+.sec-p{margin-top:16px;max-width:62ch;font-size:17px;color:var(--ink-soft)}
 .on-white{background:var(--panel);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.on-tint{background:linear-gradient(180deg,#E7F0FB,#F2F6FC);border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line)}
 
 /* ---------- quiz ---------- */
-#quiz{padding-top:34px}
+#quiz{padding-top:44px}
 .shell{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);
-  box-shadow:var(--sh-lg);overflow:hidden;margin-top:26px}
-.shell-top{background:var(--midnight);color:#fff;padding:18px 22px}
-.shell-top .row{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
-.shell-top .t{font-weight:800;font-size:16px}
-.shell-top .s{font-size:11.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
-  background:rgba(255,255,255,.15);padding:5px 12px;border-radius:999px;white-space:nowrap}
-.bar{height:5px;background:rgba(255,255,255,.16);border-radius:999px;margin-top:14px;overflow:hidden}
-.bar>i{display:block;height:100%;background:var(--emerald);border-radius:999px;width:0;
-  transition:width .35s cubic-bezier(.4,0,.2,1)}
-.shell-body{padding:28px 22px 30px}
-@media(min-width:720px){.shell-body{padding:38px 40px 40px}}
-.fade{animation:fade .28s ease both}
-@keyframes fade{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+  box-shadow:var(--sh-lg);overflow:hidden;margin-top:28px}
+.shell-top{background:linear-gradient(120deg,var(--navy),var(--navy-2));color:#fff;padding:20px 24px;
+  position:relative;overflow:hidden}
+.shell-top::after{content:"";position:absolute;inset:0;
+  background:radial-gradient(420px 180px at 88% 0%, rgba(255,92,53,.30), transparent 70%);pointer-events:none}
+.shell-top .row{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;
+  position:relative;z-index:1}
+.shell-top .t{font-weight:800;font-size:16px;font-family:"Plus Jakarta Sans",sans-serif}
+.shell-top .s{font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;
+  background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.2);
+  padding:6px 13px;border-radius:999px;white-space:nowrap}
+.bar{height:6px;background:rgba(255,255,255,.16);border-radius:999px;margin-top:15px;overflow:hidden;
+  position:relative;z-index:1}
+.bar>i{display:block;height:100%;border-radius:999px;width:0;
+  background:linear-gradient(90deg,var(--act),#FFB03A);transition:width .38s cubic-bezier(.4,0,.2,1)}
+.shell-body{padding:30px 22px 32px}
+@media(min-width:720px){.shell-body{padding:40px 42px 42px}}
+.fade{animation:fade .3s ease both}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 
-.q-h{font-size:clamp(21px,2.7vw,28px);font-weight:900;line-height:1.2}
-.q-sub{margin-top:8px;font-size:15px;color:var(--ink-soft);max-width:56ch}
-.opts{display:grid;gap:10px;margin-top:23px}
+.q-h{font-family:"Fraunces",serif;font-size:clamp(23px,3vw,32px);font-weight:700;line-height:1.14}
+.q-sub{margin-top:10px;font-size:15.5px;color:var(--ink-soft);max-width:56ch}
+.opts{display:grid;gap:11px;margin-top:26px}
 @media(min-width:760px){.opts.two{grid-template-columns:1fr 1fr}}
-.opt{display:flex;align-items:center;gap:13px;width:100%;text-align:left;cursor:pointer;
-  background:var(--panel);border:1.5px solid var(--line);border-radius:12px;padding:15px 16px;
-  font:inherit;font-size:15.5px;font-weight:650;color:var(--ink);
+.opt{display:flex;align-items:center;gap:14px;width:100%;text-align:left;cursor:pointer;
+  background:var(--panel);border:1.5px solid var(--line);border-radius:12px;padding:16px 17px;
+  font-family:"Plus Jakarta Sans",sans-serif;font-size:15.5px;font-weight:650;color:var(--ink);
   transition:border-color .15s,background .15s,transform .1s,box-shadow .15s}
-.opt:hover{border-color:var(--accent,var(--emerald));background:var(--accent-soft,var(--emerald-soft));
-  box-shadow:var(--sh-sm)}
-.opt:active{transform:translateY(1px)}
-.opt .dot{width:19px;height:19px;border-radius:50%;border:2px solid var(--line);flex:0 0 auto;
+.opt:hover{border-color:var(--accent,var(--act));background:var(--accent-soft,var(--act-soft));
+  box-shadow:var(--sh-sm);transform:translateX(2px)}
+.opt .dot{width:20px;height:20px;border-radius:50%;border:2px solid var(--line-2);flex:0 0 auto;
   transition:border-color .15s,background .15s}
-.opt:hover .dot{border-color:var(--accent,var(--emerald));background:var(--accent,var(--emerald))}
+.opt:hover .dot{border-color:var(--accent,var(--act));background:var(--accent,var(--act))}
 
-.cards{display:grid;gap:12px;margin-top:23px}
+/* situation cards */
+.cards{display:grid;gap:13px;margin-top:26px}
 @media(min-width:720px){.cards{grid-template-columns:1fr 1fr}}
-.card{text-align:left;cursor:pointer;font:inherit;background:var(--panel);
-  border:1.5px solid var(--line);border-radius:14px;padding:19px 19px 18px;
-  transition:border-color .15s,box-shadow .15s,transform .12s}
-.card:hover{border-color:var(--c);box-shadow:var(--sh);transform:translateY(-2px)}
-.card .tag{display:inline-block;font-size:10.5px;font-weight:900;letter-spacing:.14em;
-  text-transform:uppercase;padding:4px 9px;border-radius:6px;background:var(--cs);color:var(--c)}
-.card h4{margin-top:11px;font-size:17.5px;font-weight:850;line-height:1.25}
-.card p{margin-top:7px;font-size:13.5px;color:var(--ink-soft);line-height:1.5}
-.card .also{margin-top:10px;font-size:12.5px;color:var(--ink-soft);line-height:1.45;
-  padding-top:9px;border-top:1px dashed var(--line)}
-.card .tick{position:absolute;top:14px;right:14px;width:23px;height:23px;border-radius:50%;
-  border:2px solid var(--line);display:flex;align-items:center;justify-content:center;
-  font-size:13px;font-weight:900;color:transparent;transition:all .15s}
-.card{position:relative}
+.card{position:relative;text-align:left;cursor:pointer;background:var(--panel);
+  border:1.5px solid var(--line);border-radius:15px;padding:0 0 18px;overflow:hidden;
+  font-family:"Plus Jakarta Sans",sans-serif;
+  transition:border-color .16s,box-shadow .16s,transform .13s}
+.card::before{content:"";display:block;height:5px;background:var(--c)}
+.card:hover{border-color:var(--c);box-shadow:var(--sh);transform:translateY(-3px)}
+.card>*:not(::before){padding-left:19px;padding-right:19px}
+.card .tag{display:inline-block;margin:16px 19px 0;font-size:10.5px;font-weight:900;letter-spacing:.14em;
+  text-transform:uppercase;padding:5px 10px;border-radius:6px;background:var(--cs);color:var(--c)}
+.card h4{margin:12px 19px 0;font-family:"Fraunces",serif;font-size:19px;font-weight:700;line-height:1.2}
+.card p{margin:8px 19px 0;font-size:13.5px;color:var(--ink-soft);line-height:1.5}
+.card .also{margin:11px 19px 0;font-size:12.5px;color:var(--ink-soft);line-height:1.45;
+  padding-top:10px;border-top:1px dashed var(--line)}
+.card .tick{position:absolute;top:19px;right:16px;width:25px;height:25px;border-radius:50%;
+  border:2px solid var(--line-2);display:flex;align-items:center;justify-content:center;
+  font-size:14px;font-weight:900;color:transparent;transition:all .15s;background:#fff}
 .card.sel{border-color:var(--c);box-shadow:var(--sh);background:var(--cs)}
 .card.sel .tick{background:var(--c);border-color:var(--c);color:#fff}
+.card.sel .also{border-top-color:rgba(0,0,0,.10)}
+
 .multi-bar{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;
-  margin-top:22px;padding-top:20px;border-top:1px solid var(--line)}
-.multi-bar .count{font-size:14px;font-weight:750;color:var(--ink-soft)}
-.multi-bar .btn{min-width:190px}
-.btn[disabled]{opacity:.45;cursor:not-allowed;box-shadow:none}
+  margin-top:24px;padding-top:22px;border-top:1px solid var(--line)}
+.multi-bar .count{font-size:14.5px;font-weight:750;color:var(--ink-soft)}
+.multi-bar .btn{min-width:200px}
+.btn[disabled]{opacity:.42;cursor:not-allowed;box-shadow:none}
 
-/* combined-situation callout on the outcome */
-.combo{margin-top:20px;border:1.5px solid var(--coral);background:var(--coral-soft);
-  border-radius:12px;padding:16px 18px}
-.combo h5{margin:0;font-size:11px;font-weight:900;letter-spacing:.15em;text-transform:uppercase;color:#B91C1C}
-.combo p{margin-top:9px;font-size:14.5px;color:#7F1D1D}
-.tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}
-.tags span{font-size:11.5px;font-weight:800;padding:5px 11px;border-radius:999px;
-  background:var(--tc-s);color:var(--tc)}
-
-.nav{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:26px;
-  padding-top:18px;border-top:1px solid var(--line)}
-.back{background:none;border:0;font:inherit;font-size:14px;font-weight:750;color:var(--ink-soft);
-  cursor:pointer;padding:8px 2px}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:28px;
+  padding-top:19px;border-top:1px solid var(--line)}
+.back{background:none;border:0;font-family:"Plus Jakarta Sans",sans-serif;font-size:14px;
+  font-weight:750;color:var(--ink-soft);cursor:pointer;padding:8px 2px}
 .back:hover{color:var(--ink)}
-.trail{font-size:12.5px;color:var(--ink-soft);font-weight:650;text-align:right}
+.trail{font-size:12.5px;color:var(--ink-soft);font-weight:700;text-align:right}
 
 /* ---------- outcome ---------- */
-.oc-flag{display:inline-block;font-size:11px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;
-  padding:6px 12px;border-radius:999px;background:var(--cs);color:var(--c)}
-.oc-h{margin-top:15px;font-size:clamp(23px,3.1vw,33px);font-weight:900;line-height:1.14}
-.oc-p{margin-top:15px;font-size:16.5px;color:var(--ink-soft);max-width:64ch}
+.oc-flag{display:inline-block;font-family:"Plus Jakarta Sans",sans-serif;font-size:11px;font-weight:900;
+  letter-spacing:.15em;text-transform:uppercase;padding:7px 13px;border-radius:999px;
+  background:var(--cs);color:var(--c)}
+.oc-h{margin-top:16px;font-family:"Fraunces",serif;font-size:clamp(25px,3.4vw,37px);font-weight:700;line-height:1.1}
+.oc-p{margin-top:16px;font-size:17px;color:var(--ink-soft);max-width:62ch}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.tags span{font-size:11.5px;font-weight:800;padding:6px 12px;border-radius:999px;
+  background:var(--tc-s);color:var(--tc);font-family:"Plus Jakarta Sans",sans-serif}
 
-/* the routes that fit */
-.routes{display:grid;gap:12px;margin-top:26px}
-.route{border:1.5px solid var(--line);border-left:5px solid var(--rc);border-radius:13px;
-  background:var(--panel);padding:19px 20px;position:relative}
+.routes{display:grid;gap:14px;margin-top:28px}
+.route{border:1.5px solid var(--line);border-radius:14px;background:var(--panel);
+  padding:0 0 20px;overflow:hidden;position:relative}
+.route::before{content:"";display:block;height:5px;background:var(--rc)}
 .route.best{border-color:var(--rc);box-shadow:var(--sh)}
-.route .rh{display:flex;align-items:center;gap:11px;flex-wrap:wrap}
-.route h4{font-size:17.5px;font-weight:900}
-.route .badge{font-size:10px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;
-  padding:4px 9px;border-radius:6px;background:var(--rcs);color:var(--rc)}
-.route .why{margin-top:4px;font-size:13px;font-weight:750;color:var(--rc)}
-.route p{margin-top:9px;font-size:14.5px;color:var(--ink-soft)}
-.route .flagline{margin-top:11px;background:var(--panel-2);border:1px solid var(--line);
-  border-radius:9px;padding:11px 13px;font-size:13.5px;color:var(--ink-soft)}
-.route .flagline b{color:var(--ink)}
-.ruled-out{margin-top:16px;background:var(--panel-2);border:1px solid var(--line);border-radius:12px;
-  padding:16px 18px}
-.ruled-out h5{margin:0;font-size:13px;font-weight:850;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft)}
-.ruled-out ul{margin:11px 0 0;padding-left:19px;font-size:14px;color:var(--ink-soft)}
-.ruled-out li{margin-bottom:6px}
+.route.best::before{height:7px}
+.route .rh{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:18px 20px 0}
+.route h4{font-family:"Fraunces",serif;font-size:20px;font-weight:700}
+.route .badge{font-family:"Plus Jakarta Sans",sans-serif;font-size:10px;font-weight:900;
+  letter-spacing:.13em;text-transform:uppercase;padding:5px 10px;border-radius:6px;
+  background:var(--rcs);color:var(--rc)}
+.route .why{margin:6px 20px 0;font-size:13.5px;font-weight:750;color:var(--rc)}
+.route p{margin:11px 20px 0;font-size:14.5px;color:var(--ink-soft)}
+.route .flagline{margin:13px 20px 0;background:var(--warn-soft);border:1px solid rgba(180,83,9,.28);
+  border-radius:10px;padding:12px 14px;font-size:13.5px;color:#7C3D06}
+.route .flagline b{color:#5B2D04}
 
-.oc-note{margin-top:18px;background:var(--panel-3);border:1px solid var(--line);border-radius:11px;
-  padding:15px 17px;font-size:14.5px;color:var(--ink-soft)}
+.ruled-out{margin-top:18px;background:var(--panel-2);border:1px solid var(--line);border-radius:13px;
+  padding:18px 20px}
+.ruled-out h5{margin:0;font-family:"Plus Jakarta Sans",sans-serif;font-size:11px;font-weight:900;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft)}
+.ruled-out ul{margin:12px 0 0;padding-left:19px;font-size:14px;color:var(--ink-soft)}
+.ruled-out li{margin-bottom:7px}
+
+.combo{margin-top:20px;border:1.5px solid var(--c-clock);background:var(--c-clock-s);
+  border-radius:13px;padding:17px 19px}
+.combo h5{margin:0;font-family:"Plus Jakarta Sans",sans-serif;font-size:11px;font-weight:900;
+  letter-spacing:.14em;text-transform:uppercase;color:#9F1239}
+.combo p{margin-top:10px;font-size:14.5px;color:#881337}
+
+.oc-note{margin-top:18px;background:var(--panel-2);border-left:4px solid var(--c-rent);
+  border-radius:0 11px 11px 0;padding:15px 18px;font-size:14.5px;color:var(--ink-soft)}
 .oc-note b{color:var(--ink)}
 
-.form{margin-top:28px;padding-top:26px;border-top:1px solid var(--line)}
-.form h4{font-size:19px;font-weight:850}
-.form .fh{margin-top:6px;font-size:14.5px;color:var(--ink-soft);max-width:58ch}
-.grid2{display:grid;gap:14px;margin-top:18px}
-@media(min-width:640px){.grid2{grid-template-columns:1fr 1fr}}
-label.fl{display:block;font-size:13.5px;font-weight:750;margin-bottom:6px}
-.in{width:100%;border:1px solid var(--line);border-radius:10px;padding:12px 13px;font:inherit;
-  font-size:16px;background:#fff;color:var(--ink)}
-.in:focus{outline:none;border-color:var(--emerald);box-shadow:0 0 0 3px rgba(22,163,74,.18)}
-textarea.in{resize:vertical}
-.consent{display:flex;gap:11px;align-items:flex-start;margin-top:16px;background:var(--panel-2);
-  border:1px solid var(--line);border-radius:11px;padding:14px 15px;font-size:13.5px;color:var(--ink-soft)}
-.consent input{margin-top:3px;width:17px;height:17px;accent-color:var(--emerald);flex:0 0 auto}
-.form .btn-g{width:100%;margin-top:18px}
-.fineprint{margin-top:13px;font-size:12.5px;color:var(--ink-soft);text-align:center}
-.err{margin-top:14px;background:var(--coral-soft);border:1px solid rgba(239,68,68,.35);
-  border-radius:10px;padding:11px 14px;font-size:14px;font-weight:700;color:#B91C1C}
-
-.ro-flag{display:inline-block;font-size:11px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;
-  padding:6px 12px;border-radius:999px;background:var(--panel-3);color:var(--ink-soft)}
-.oc-points{list-style:none;padding:0;margin:23px 0 0;display:grid;gap:9px}
+.oc-points{list-style:none;padding:0;margin:24px 0 0;display:grid;gap:10px}
 @media(min-width:760px){.oc-points{grid-template-columns:1fr 1fr}}
 .oc-points li{display:flex;gap:11px;align-items:flex-start;background:var(--panel-2);
-  border:1px solid var(--line);border-radius:11px;padding:13px 15px;font-size:14.5px;font-weight:650}
+  border:1px solid var(--line);border-radius:11px;padding:14px 16px;font-size:14.5px;font-weight:650}
 .oc-points li b{color:var(--c);flex:0 0 auto;font-size:15px;line-height:1.45}
-.ro-actions{display:flex;flex-wrap:wrap;gap:11px;margin-top:23px}
+.ro-flag{display:inline-block;font-family:"Plus Jakarta Sans",sans-serif;font-size:11px;font-weight:900;
+  letter-spacing:.15em;text-transform:uppercase;padding:7px 13px;border-radius:999px;
+  background:var(--panel-3);color:var(--ink-soft)}
+.ro-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
 
-.done{text-align:center;padding:16px 0 6px}
-.done .tick{width:58px;height:58px;border-radius:50%;background:var(--emerald-soft);color:var(--emerald);
-  display:flex;align-items:center;justify-content:center;font-size:29px;font-weight:900;margin:0 auto}
-.done h3{margin-top:18px;font-size:clamp(23px,3vw,31px);font-weight:900}
-.done p{margin-top:14px;font-size:16.5px;color:var(--ink-soft);max-width:52ch;margin-left:auto;margin-right:auto}
-.done .btn{margin-top:22px}
+/* form */
+.form{margin-top:30px;padding-top:28px;border-top:2px solid var(--line)}
+.form h4{font-family:"Fraunces",serif;font-size:21px;font-weight:700}
+.form .fh{margin-top:8px;font-size:14.5px;color:var(--ink-soft);max-width:58ch}
+.grid2{display:grid;gap:15px;margin-top:20px}
+@media(min-width:640px){.grid2{grid-template-columns:1fr 1fr}}
+label.fl{display:block;font-size:13px;font-weight:800;margin-bottom:7px;letter-spacing:.02em}
+.in{width:100%;border:1.5px solid var(--line);border-radius:10px;padding:13px 14px;
+  font-family:"Plus Jakarta Sans",sans-serif;font-size:16px;background:#fff;color:var(--ink)}
+.in:focus{outline:none;border-color:var(--act);box-shadow:0 0 0 3px rgba(255,92,53,.2)}
+textarea.in{resize:vertical}
+.consent{display:flex;gap:12px;align-items:flex-start;margin-top:18px;background:var(--panel-2);
+  border:1px solid var(--line);border-radius:11px;padding:15px 16px;font-size:13.5px;color:var(--ink-soft)}
+.consent input{margin-top:3px;width:18px;height:18px;accent-color:var(--act);flex:0 0 auto}
+.form .btn-act{width:100%;margin-top:20px;font-size:17px;padding:17px 27px}
+.fineprint{margin-top:14px;font-size:12.5px;color:var(--ink-soft);text-align:center}
+.err{margin-top:15px;background:var(--c-clock-s);border:1.5px solid var(--c-clock);
+  border-radius:10px;padding:12px 15px;font-size:14px;font-weight:750;color:#9F1239}
+
+.done{text-align:center;padding:18px 0 8px}
+.done .tick{width:64px;height:64px;border-radius:50%;background:var(--go-soft);color:var(--go);
+  display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:900;margin:0 auto}
+.done h3{margin-top:20px;font-family:"Fraunces",serif;font-size:clamp(25px,3.2vw,34px);font-weight:700}
+.done p{margin-top:15px;font-size:17px;color:var(--ink-soft);max-width:52ch;margin-left:auto;margin-right:auto}
+.done .btn{margin-top:24px}
 
 /* ---------- four ways ---------- */
-.ways{display:grid;gap:14px;margin-top:30px}
-@media(min-width:720px){.ways{grid-template-columns:1fr 1fr}}
-.way{background:var(--panel);border:1px solid var(--line);border-top:4px solid var(--c);
-  border-radius:var(--r);padding:24px 22px;box-shadow:var(--sh-sm)}
-.way .k{font-size:10.5px;font-weight:900;letter-spacing:.15em;text-transform:uppercase;color:var(--c)}
-.way h4{margin-top:11px;font-size:19px;font-weight:900}
-.way p{margin-top:10px;font-size:14.5px;color:var(--ink-soft)}
-.way dl{margin:15px 0 0;font-size:13.5px}
-.way dt{font-weight:850;color:var(--ink);margin-top:10px}
-.way dd{margin:3px 0 0;color:var(--ink-soft)}
+.ways{display:grid;gap:15px;margin-top:34px}
+@media(min-width:760px){.ways{grid-template-columns:1fr 1fr}}
+.way{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);
+  padding:0 0 26px;overflow:hidden;box-shadow:var(--sh-sm)}
+.way::before{content:"";display:block;height:6px;background:var(--c)}
+.way .k{display:inline-block;margin:22px 24px 0;font-family:"Plus Jakarta Sans",sans-serif;
+  font-size:10.5px;font-weight:900;letter-spacing:.15em;text-transform:uppercase;
+  background:var(--cs);color:var(--c);padding:5px 11px;border-radius:6px}
+.way h4{margin:14px 24px 0;font-family:"Fraunces",serif;font-size:23px;font-weight:700}
+.way p{margin:12px 24px 0;font-size:14.5px;color:var(--ink-soft)}
+.way dl{margin:18px 24px 0;font-size:13.5px}
+.way dt{font-weight:850;color:var(--c);margin-top:12px;font-size:12px;letter-spacing:.09em;text-transform:uppercase}
+.way dd{margin:4px 0 0;color:var(--ink-soft)}
 
-/* ---------- comparison table ---------- */
-.tblwrap{margin-top:28px;overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);
+/* ---------- table ---------- */
+.tblwrap{margin-top:30px;overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);
   background:var(--panel);box-shadow:var(--sh-sm)}
-table{border-collapse:collapse;width:100%;min-width:760px;font-size:14.5px}
-th,td{text-align:left;padding:14px 16px;border-bottom:1px solid var(--line);vertical-align:top}
-thead th{background:var(--panel-2);font-size:11.5px;font-weight:850;letter-spacing:.1em;
-  text-transform:uppercase;color:var(--ink-soft);white-space:nowrap}
-tbody th{font-weight:800;font-size:14px;white-space:nowrap}
+table{border-collapse:collapse;width:100%;min-width:800px;font-size:14.5px}
+th,td{text-align:left;padding:15px 17px;border-bottom:1px solid var(--line);vertical-align:top}
+thead th{background:var(--navy);color:#fff;font-family:"Plus Jakarta Sans",sans-serif;font-size:11.5px;
+  font-weight:850;letter-spacing:.1em;text-transform:uppercase;white-space:nowrap}
+thead th:nth-child(2){color:#8FE9C4} thead th:nth-child(3){color:#A9C8FF}
+thead th:nth-child(4){color:#FFD79A} thead th:nth-child(5){color:#9BE8F5}
+tbody th{font-family:"Plus Jakarta Sans",sans-serif;font-weight:800;font-size:13.5px;white-space:nowrap;
+  background:var(--panel-2)}
 tr:last-child td,tr:last-child th{border-bottom:0}
 
-/* ---------- steps / situations ---------- */
-.steps{display:grid;gap:16px;margin-top:30px}
+/* ---------- steps ---------- */
+.steps{display:grid;gap:17px;margin-top:34px}
 @media(min-width:700px){.steps{grid-template-columns:repeat(4,1fr)}}
-.step{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:22px 20px;
+.step{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:24px 22px;
   box-shadow:var(--sh-sm)}
-.step .n{width:38px;height:38px;border-radius:10px;background:var(--midnight);color:#fff;
-  font-weight:900;font-size:16px;display:flex;align-items:center;justify-content:center}
-.step h4{margin-top:14px;font-size:16.5px;font-weight:850}
-.step p{margin-top:7px;font-size:14px;color:var(--ink-soft)}
+.step .n{width:44px;height:44px;border-radius:12px;color:#fff;font-family:"Fraunces",serif;
+  font-weight:800;font-size:19px;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(140deg,var(--sc),var(--sc2))}
+.step h4{margin-top:16px;font-family:"Fraunces",serif;font-size:18px;font-weight:700}
+.step p{margin-top:9px;font-size:14px;color:var(--ink-soft)}
 
-.sits{display:grid;gap:12px;margin-top:28px}
+/* ---------- situations recap ---------- */
+.sits{display:grid;gap:13px;margin-top:32px}
 @media(min-width:640px){.sits{grid-template-columns:1fr 1fr}}
 @media(min-width:980px){.sits{grid-template-columns:repeat(3,1fr)}}
-.sit{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--c);
-  border-radius:12px;padding:18px 19px}
-.sit h4{font-size:16px;font-weight:850}
-.sit p{margin-top:7px;font-size:14px;color:var(--ink-soft)}
+.sit{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:0 0 19px;
+  overflow:hidden;box-shadow:var(--sh-sm)}
+.sit::before{content:"";display:block;height:5px;background:var(--c)}
+.sit h4{margin:19px 20px 0;font-family:"Fraunces",serif;font-size:18px;font-weight:700;color:var(--c)}
+.sit p{margin:9px 20px 0;font-size:14px;color:var(--ink-soft)}
 
 /* ---------- guide ---------- */
-.guide{background:var(--midnight);color:#fff;border-radius:var(--r);padding:34px 28px;
-  display:grid;gap:24px;align-items:center;box-shadow:var(--sh-lg)}
-@media(min-width:840px){.guide{grid-template-columns:1.3fr .9fr;padding:44px 46px}}
-.guide h3{font-size:clamp(22px,2.8vw,30px);font-weight:900;line-height:1.14}
-.guide p{margin-top:14px;color:#C3D0DF;font-size:16px;max-width:52ch}
-.guide ul{margin:18px 0 0;padding-left:19px;color:#C3D0DF;font-size:15px}
-.guide li{margin-bottom:7px}
-.gcover{background:linear-gradient(160deg,#132E52,#0B1F3B);border:1px solid rgba(255,255,255,.16);
-  border-radius:12px;padding:28px 24px}
-.gcover .k{font-size:10.5px;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#7FD69B}
-.gcover h4{margin-top:12px;font-size:22px;font-weight:900;line-height:1.18}
-.gcover p{margin-top:11px;font-size:13.5px;color:#9FB0C4}
+.guide{border-radius:var(--r);padding:38px 30px;display:grid;gap:26px;align-items:center;
+  box-shadow:var(--sh-lg);color:#fff;background:
+    radial-gradient(700px 340px at 8% 0%, rgba(255,92,53,.30), transparent 62%),
+    radial-gradient(600px 320px at 100% 100%, rgba(6,182,212,.28), transparent 62%),
+    linear-gradient(150deg,var(--navy),var(--navy-2))}
+@media(min-width:860px){.guide{grid-template-columns:1.25fr .95fr;padding:50px 52px}}
+.guide h3{font-size:clamp(25px,3.1vw,34px);font-weight:700;line-height:1.1}
+.guide p{margin-top:16px;color:#C3D3E8;font-size:16.5px;max-width:50ch}
+.guide ul{margin:20px 0 0;padding-left:20px;color:#C3D3E8;font-size:15px}
+.guide li{margin-bottom:8px}
+.gcover{background:linear-gradient(158deg,#16345E,#0A1C36);border:1px solid rgba(255,255,255,.18);
+  border-radius:14px;padding:32px 27px;box-shadow:0 20px 44px rgba(0,0,0,.34)}
+.gcover .k{font-family:"Plus Jakarta Sans",sans-serif;font-size:10.5px;font-weight:900;
+  letter-spacing:.18em;text-transform:uppercase;color:#FFB59F}
+.gcover h4{margin-top:14px;font-size:25px;font-weight:700;line-height:1.15}
+.gcover .sw{display:flex;gap:6px;margin-top:18px}
+.gcover .sw i{height:5px;flex:1;border-radius:3px}
+.gcover p{margin-top:16px;font-size:13.5px;color:#93A9C4}
 
-.faq{margin-top:28px;display:grid;gap:10px}
-details{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:0 18px}
-summary{cursor:pointer;list-style:none;padding:17px 0;font-weight:800;font-size:16px;
-  display:flex;justify-content:space-between;gap:16px;align-items:center}
+/* ---------- faq ---------- */
+.faq{margin-top:32px;display:grid;gap:11px}
+details{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:0 20px;
+  transition:border-color .15s}
+details[open]{border-color:var(--act);box-shadow:var(--sh-sm)}
+summary{cursor:pointer;list-style:none;padding:19px 0;font-family:"Plus Jakarta Sans",sans-serif;
+  font-weight:800;font-size:16px;display:flex;justify-content:space-between;gap:16px;align-items:center}
 summary::-webkit-details-marker{display:none}
-summary .pm{color:var(--emerald);font-size:21px;font-weight:800;line-height:1;flex:0 0 auto;
-  transition:transform .18s}
+summary .pm{color:var(--act);font-size:23px;font-weight:800;line-height:1;flex:0 0 auto;
+  transition:transform .2s}
 details[open] summary .pm{transform:rotate(45deg)}
-details p{padding:0 0 18px;font-size:15px;color:var(--ink-soft);max-width:70ch}
+details p{padding:0 0 20px;font-size:15px;color:var(--ink-soft);max-width:70ch}
 
-.final{background:var(--midnight-deep);color:#fff;text-align:center;padding:64px 0}
-.final h2{font-size:clamp(25px,3.6vw,40px);font-weight:900;line-height:1.1;max-width:20ch;margin:0 auto}
-.final p{margin-top:16px;color:#A8B8CA;font-size:17px;max-width:56ch;margin-left:auto;margin-right:auto}
-.final .row{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:28px}
+/* ---------- final ---------- */
+.final{color:#fff;text-align:center;padding:74px 0;background:
+  radial-gradient(800px 400px at 20% 0%, rgba(255,92,53,.26), transparent 62%),
+  radial-gradient(700px 380px at 84% 100%, rgba(139,92,246,.26), transparent 62%),
+  linear-gradient(160deg,var(--navy-3),var(--navy))}
+.final h2{font-size:clamp(28px,4vw,46px);font-weight:700;line-height:1.06;max-width:19ch;margin:0 auto}
+.final p{margin-top:18px;color:#B5C7DE;font-size:17.5px;max-width:54ch;margin-left:auto;margin-right:auto}
+.final .row{display:flex;flex-wrap:wrap;gap:13px;justify-content:center;margin-top:32px}
 
-footer{background:#040D1D;color:#8A9AAC;padding:34px 0;font-size:13.5px}
-footer .wrap{display:grid;gap:20px}
-@media(min-width:760px){footer .wrap{grid-template-columns:1.4fr 1fr 1fr}}
-footer b{color:#E2E8F0;display:block;margin-bottom:8px;font-size:14px}
-footer a{color:#A8B8CA}
-.legal{margin-top:22px;padding-top:18px;border-top:1px solid rgba(255,255,255,.1);font-size:12px;color:#6B7A8C}
+footer{background:#050E1E;color:#8497AC;padding:40px 0 30px;font-size:13.5px}
+footer .wrap{display:grid;gap:24px}
+@media(min-width:780px){footer .wrap{grid-template-columns:1.5fr 1fr 1fr}}
+footer b{color:#E8EFF7;display:block;margin-bottom:9px;font-size:14.5px;
+  font-family:"Plus Jakarta Sans",sans-serif;font-weight:800}
+footer a{color:#A6B8CC}
+.legal{margin-top:26px;padding-top:20px;border-top:1px solid rgba(255,255,255,.1);
+  font-size:12px;color:#65788D;line-height:1.6}
 
-.callbar{position:fixed;left:0;right:0;bottom:0;z-index:50;display:none;gap:10px;padding:10px 14px;
-  background:rgba(255,255,255,.97);backdrop-filter:blur(8px);border-top:1px solid var(--line)}
+.callbar{position:fixed;left:0;right:0;bottom:0;z-index:50;display:none;gap:11px;padding:11px 14px;
+  background:rgba(255,255,255,.97);backdrop-filter:blur(10px);border-top:1px solid var(--line)}
 @media(max-width:760px){.callbar{display:flex}}
-.callbar .btn{flex:1;font-size:15px;padding:13px 14px}
+.callbar .btn{flex:1;font-size:15px;padding:14px 14px}
 </style>
 </head>
 <body>
 
 <header><div class="wrap">
-  <div class="brand">Home Sale <span>Options</span></div>
+  <div class="brand"><span class="mark"></span><span data-cfg="company">Home Sale Options</span></div>
   <div class="hdr-right">
-    <a class="hdr-phone" href="tel:5125550142">(512) 555-0142<small>Call or text</small></a>
-    <a class="btn btn-g btn-sm hdr-cta" href="#quiz">Find My Options</a>
+    <a class="hdr-phone" data-cfg-href="phoneHref" href="tel:8888888888">
+      <span data-cfg="phone">(888) 888-8888</span><small>Call or text</small></a>
+    <a class="btn btn-act btn-sm hdr-cta" href="#quiz">Show My Options</a>
   </div>
 </div></header>
 
 <div class="hero"><div class="wrap">
-  <span class="eyebrow">Austin and surrounding counties</span>
-  <h1>There is more than one way to sell a house.</h1>
-  <p class="lede">Most people only ever hear about two: list it with an agent, or take a cash offer. There
-    are two more, and for some situations they are worth a great deal more money. Answer a few questions
-    about what is actually going on and we will show you which ones fit you.</p>
+  <span class="eyebrow on-dark">Four ways to sell, not one</span>
+  <h1>There is more than one way <em>out</em> of a house.</h1>
+  <p class="lede">Most people only ever hear about two: list it with an agent, or take a cash offer.
+    There are two more, and in some situations they are worth a great deal more money. Tell us what is
+    actually going on and we will show you which ones fit your numbers.</p>
   <div class="hero-cta">
-    <a class="btn btn-g" href="#quiz">Show Me My Options</a>
-    <a class="btn btn-line" href="#ways">See All Four Ways</a>
+    <a class="btn btn-act" href="#quiz">Show Me My Options</a>
+    <a class="btn btn-ghost" href="#ways">See All Four Ways</a>
   </div>
   <div class="chips">
-    <span class="chip g">No obligation</span>
-    <span class="chip b">We are the buyer, not an agent</span>
-    <span class="chip o">Not a listing agreement</span>
+    <span class="chip">No obligation</span>
+    <span class="chip">We are the buyer, not an agent</span>
+    <span class="chip">Not a listing agreement</span>
+    <span class="chip">About two minutes</span>
   </div>
 </div></div>
+<div class="rail">
+  <i style="background:var(--act)"></i><i style="background:var(--c-fix)"></i>
+  <i style="background:var(--c-move)"></i><i style="background:var(--c-rent)"></i>
+  <i style="background:var(--c-look)"></i><i style="background:var(--c-estate)"></i>
+</div>
 
 <div class="trust"><div class="wrap">
-  <div><b>4</b><span>Ways to structure a sale</span></div>
-  <div><b>0</b><span>Commissions, repairs or showings</span></div>
-  <div><b>You</b><span>Pick the closing date</span></div>
-  <div><b>7</b><span>Days is the fastest we have closed</span></div>
+  <div style="--tn:var(--act)"><b>4</b><span>Ways to structure a sale</span></div>
+  <div style="--tn:var(--c-move)"><b>0</b><span>Commissions, repairs or showings</span></div>
+  <div style="--tn:var(--c-rent)"><b>You</b><span>Pick the closing date</span></div>
+  <div style="--tn:var(--c-estate)"><b>7</b><span>Days is the fastest we have closed</span></div>
 </div></div>
 
 <section id="quiz"><div class="wrap">
   <span class="eyebrow">Start here</span>
   <h2 class="sec-h">Most people are in more than one situation at once.</h2>
-  <p class="sec-p">An inherited house that is also heading for auction. A rental that needs a new roof. A
-    divorce with a payment already behind. Those combinations are the norm, and they are exactly what a
-    "get your cash offer" form cannot handle. Tick everything that applies to you. The questions follow
-    your answers, so you are only asked what is relevant, and at the end you get the routes that genuinely
-    work for your combination rather than the one we would prefer.</p>
+  <p class="sec-p">An inherited house that is also heading for auction. A rental that needs a new roof.
+    A divorce with a payment already behind. Those combinations are the norm, and they are exactly what a
+    "get your cash offer" form cannot handle. Tick everything that applies. The questions follow your
+    answers, so you are only asked what is relevant, and at the end you get the routes that genuinely work
+    for your combination rather than the one we would prefer.</p>
 
   <div class="shell" id="shell">
     <div class="shell-top">
@@ -375,7 +477,7 @@ footer a{color:#A8B8CA}
     about their business, not about your house.</p>
 
   <div class="ways">
-    <div class="way" style="--c:var(--emerald)">
+    <div class="way" style="--c:var(--c-move);--cs:var(--c-move-s)">
       <div class="k">Option one</div>
       <h4>We buy it for cash</h4>
       <p>We purchase the property outright. You get the whole amount at closing, you pick the date, and
@@ -387,11 +489,11 @@ footer a{color:#A8B8CA}
       </dl>
     </div>
 
-    <div class="way" style="--c:var(--electric)">
+    <div class="way" style="--c:var(--c-rent);--cs:var(--c-rent-s)">
       <div class="k">Option two</div>
       <h4>You carry the financing</h4>
-      <p>You sell us the house and we pay you monthly instead of all at once. Because we are not paying cash,
-        the total price is usually well above a cash offer, sometimes close to full market value.</p>
+      <p>You sell us the house and we pay you monthly instead of all at once. Because we are not paying
+        cash, the total price is usually well above a cash offer, sometimes close to full market value.</p>
       <dl>
         <dt>Best when</dt><dd>You own it outright or nearly so, and a monthly cheque suits you better than a lump sum.</dd>
         <dt>The trade</dt><dd>You get paid over time rather than at closing, and you are relying on us to keep paying.</dd>
@@ -399,12 +501,12 @@ footer a{color:#A8B8CA}
       </dl>
     </div>
 
-    <div class="way" style="--c:var(--amber)">
+    <div class="way" style="--c:var(--c-fix);--cs:var(--c-fix-s)">
       <div class="k">Option three</div>
       <h4>We take over the payments</h4>
-      <p>Your existing loan stays in place and we take over making the payments on it. This is the route for
-        people with little equity, or who are behind and want out from under the payment rather than out of a
-        house they have money in.</p>
+      <p>Your existing loan stays in place and we take over making the payments on it. This is the route
+        for people with little equity, or who are behind and want out from under the payment rather than
+        out of a house they have money in.</p>
       <dl>
         <dt>Best when</dt><dd>You owe close to what it is worth, the rate is low, or you are behind and the clock is running.</dd>
         <dt>Be clear on this</dt><dd>The loan stays in your name until it is paid off or refinanced. That is the whole risk, and we will put the protections in writing before you sign anything.</dd>
@@ -412,7 +514,7 @@ footer a{color:#A8B8CA}
       </dl>
     </div>
 
-    <div class="way" style="--c:var(--sky)">
+    <div class="way" style="--c:var(--c-look);--cs:var(--c-look-s)">
       <div class="k">Option four</div>
       <h4>You list it on the open market</h4>
       <p>Sometimes the honest answer is that you will do better with an agent, and we would rather say so
@@ -426,7 +528,7 @@ footer a{color:#A8B8CA}
   </div>
 </div></section>
 
-<section id="compare"><div class="wrap">
+<section id="compare" class="on-tint"><div class="wrap">
   <span class="eyebrow">Side by side</span>
   <h2 class="sec-h">What each route actually costs you.</h2>
   <div class="tblwrap"><table>
@@ -443,22 +545,22 @@ footer a{color:#A8B8CA}
       <tr><th>Needs equity</th><td>Yes</td><td>Yes, ideally a lot</td><td>No, it works with very little</td><td>Yes, enough to cover the costs</td></tr>
     </tbody>
   </table></div>
-  <p class="sec-p" style="margin-top:18px"><b>None of this is legal or tax advice.</b> Carrying financing and
-    taking over payments are both real contracts with real consequences. Have your own attorney read anything
-    before you sign it. We will wait, and if somebody tells you not to, walk away from them.</p>
+  <p class="sec-p" style="margin-top:20px"><b>None of this is legal or tax advice.</b> Carrying financing
+    and taking over payments are both real contracts with real consequences. Have your own attorney read
+    anything before you sign it. We will wait, and if somebody tells you not to, walk away from them.</p>
 </div></section>
 
 <section class="on-white"><div class="wrap">
   <span class="eyebrow">How it works</span>
   <h2 class="sec-h">Four steps, and you can stop at any one of them.</h2>
   <div class="steps">
-    <div class="step"><div class="n">1</div><h4>Tell us the situation</h4>
+    <div class="step" style="--sc:var(--act);--sc2:#FF9166"><div class="n">1</div><h4>Tell us the situation</h4>
       <p>About two minutes of questions. No account, no credit check, nothing pulled on your property.</p></div>
-    <div class="step"><div class="n">2</div><h4>We call you back</h4>
-      <p>A real person, usually the same day. We go through which structures fit and what each one would pay you.</p></div>
-    <div class="step"><div class="n">3</div><h4>One walkthrough</h4>
+    <div class="step" style="--sc:var(--c-fix);--sc2:#FBBF4D"><div class="n">2</div><h4>We call you back</h4>
+      <p>A real person, usually the same day. We go through which structures fit and what each would pay you.</p></div>
+    <div class="step" style="--sc:var(--c-rent);--sc2:#7BA9FA"><div class="n">3</div><h4>One walkthrough</h4>
       <p>Twenty minutes, in person or on video. No cleaning, no staging, no strangers through the house.</p></div>
-    <div class="step"><div class="n">4</div><h4>You get the numbers</h4>
+    <div class="step" style="--sc:var(--c-move);--sc2:#54D3A6"><div class="n">4</div><h4>You get the numbers</h4>
       <p>Every route that fits, priced, on one page. Take it to your attorney. Then decide, or do not.</p></div>
   </div>
 </div></section>
@@ -469,28 +571,28 @@ footer a{color:#A8B8CA}
   <p class="sec-p">These are the ones that come up most, and most callers tick two or three of them rather
     than one.</p>
   <div class="sits">
-    <div class="sit" style="--c:var(--violet)"><h4>You inherited it</h4>
+    <div class="sit" style="--c:var(--c-estate)"><h4>You inherited it</h4>
       <p>Probate part-finished, three siblings with three opinions, and a house still full of forty years of belongings.</p></div>
-    <div class="sit" style="--c:var(--coral)"><h4>Foreclosure or a deadline</h4>
+    <div class="sit" style="--c:var(--c-clock)"><h4>Foreclosure or a deadline</h4>
       <p>Missed payments, a notice of default, an auction date, back taxes or a lien. The options narrow every week.</p></div>
-    <div class="sit" style="--c:var(--orange)"><h4>It needs more work than you have</h4>
+    <div class="sit" style="--c:var(--c-fix)"><h4>It needs more work than you have</h4>
       <p>Roof, foundation, fire or water damage, or years of clutter. No bank will lend on it and no agent will list it.</p></div>
-    <div class="sit" style="--c:var(--electric)"><h4>You are done being a landlord</h4>
+    <div class="sit" style="--c:var(--c-rent)"><h4>You are done being a landlord</h4>
       <p>A tenant behind on rent, an eviction half-started, repairs stacking up, and you live three states away.</p></div>
-    <div class="sit" style="--c:var(--emerald)"><h4>You have to be out by a date</h4>
+    <div class="sit" style="--c:var(--c-move)"><h4>You have to be out by a date</h4>
       <p>A job, a divorce, a care move, or a house you are already under contract to buy.</p></div>
-    <div class="sit" style="--c:var(--sky)"><h4>You are just working it out</h4>
+    <div class="sit" style="--c:var(--c-look)"><h4>You are just working it out</h4>
       <p>Nothing is wrong. You want to know what it is worth and what each route would actually net you.</p></div>
   </div>
-  <p class="sec-p" style="margin-top:22px"><b>The combinations are where it gets useful.</b> An inherited
+  <p class="sec-p" style="margin-top:26px"><b>The combinations are where it gets useful.</b> An inherited
     house heading for auction is a different problem from either one on its own, because probate does not
     pause for the foreclosure calendar. Tick both and the questions, and the answer, change accordingly.</p>
 </div></section>
 
-<section class="on-white"><div class="wrap">
+<section class="on-tint"><div class="wrap">
   <div class="guide">
     <div>
-      <span class="eyebrow" style="color:#7FD69B">Free, and you can read it before you talk to anyone</span>
+      <span class="eyebrow on-dark">Free, and you can read it before you talk to anyone</span>
       <h3>The Home Sale Options Guide</h3>
       <p>Twenty pages on how to work out what your house is actually worth to you under each of the four
         structures, written for people in a situation rather than people browsing.</p>
@@ -501,17 +603,21 @@ footer a{color:#A8B8CA}
         <li>What a lender's repair list does to a sale, and when it kills one</li>
         <li>Where the foreclosure timeline still gives you room</li>
       </ul>
-      <a class="btn btn-ghost" style="margin-top:22px" href="#" onclick="return getGuide(event)">Download The Guide</a>
+      <a class="btn btn-act" style="margin-top:26px" href="#" onclick="return getGuide(event)">Download The Guide</a>
     </div>
     <div class="gcover">
       <div class="k">Homeowner guide</div>
       <h4>Cash, terms, take-over, or list?</h4>
+      <div class="sw">
+        <i style="background:var(--c-move)"></i><i style="background:var(--c-rent)"></i>
+        <i style="background:var(--c-fix)"></i><i style="background:var(--c-look)"></i>
+      </div>
       <p>Work out your own numbers before anybody quotes you one.</p>
     </div>
   </div>
 </div></section>
 
-<section><div class="wrap">
+<section class="on-white"><div class="wrap">
   <span class="eyebrow">Straight answers</span>
   <h2 class="sec-h">The questions everybody asks first.</h2>
   <div class="faq">
@@ -520,56 +626,59 @@ footer a{color:#A8B8CA}
         the whole thing, read what we send you, and never speak to us again.</p></details>
     <details><summary>Why would I take payments instead of cash?<span class="pm">+</span></summary>
       <p>Because the total is usually a lot higher. When we do not have to raise the money up front, we can
-        pay far closer to what the house is really worth. If you own the house outright and you do not need a
-        lump sum on a particular date, this is often the route that pays you the most. It is also the route
-        where you should have your own attorney involved, because you are relying on payments continuing.</p></details>
+        pay far closer to what the house is really worth. If you own the house outright and you do not need
+        a lump sum on a particular date, this is often the route that pays you the most. It is also the
+        route where you should have your own attorney involved, because you are relying on payments
+        continuing.</p></details>
     <details><summary>What does taking over my payments actually mean?<span class="pm">+</span></summary>
       <p>Your mortgage stays where it is and we take over paying it. You stop being responsible for finding
         the money each month. The part you must understand: the loan remains in your name until it is paid
-        off or refinanced, so the protections written into the agreement are the whole ball game. We put them
-        in writing and we expect you to have your own attorney read them.</p></details>
+        off or refinanced, so the protections written into the agreement are the whole ball game. We put
+        them in writing and we expect you to have your own attorney read them.</p></details>
     <details><summary>Are you going to lowball me?<span class="pm">+</span></summary>
-      <p>Our cash number sits below what a perfect retail sale would fetch and we will say so plainly. That is
-        also exactly why we show you the other three routes, because for a lot of people the cash offer is not
-        the one that pays the most. What we will not do is quote a high number to get a contract signed and
-        then chip away at it before closing.</p></details>
+      <p>Our cash number sits below what a perfect retail sale would fetch and we will say so plainly. That
+        is also exactly why we show you the other three routes, because for a lot of people the cash offer
+        is not the one that pays the most. What we will not do is quote a high number to get a contract
+        signed and then chip away at it before closing.</p></details>
     <details><summary>What if I owe more than the house is worth?<span class="pm">+</span></summary>
-      <p>That does not end the conversation. It usually rules out a cash purchase, because there is no room in
-        it, and it is often exactly the situation where taking over the payments works. There are also cases
-        where the honest answer is that selling is not your best move, and we will tell you that too.</p></details>
+      <p>That does not end the conversation. It usually rules out a cash purchase, because there is no room
+        in it, and it is often exactly the situation where taking over the payments works. There are also
+        cases where the honest answer is that selling is not your best move, and we will tell you that too.</p></details>
     <details><summary>Do I have to clean it out or fix anything?<span class="pm">+</span></summary>
-      <p>No. Take what you want and leave the rest, including furniture, cars, and whatever is in the garage.
-        We deal with it after closing. This comes up most with inherited properties and it is never a problem.</p></details>
+      <p>No. Take what you want and leave the rest, including furniture, cars, and whatever is in the
+        garage. We deal with it after closing. This comes up most with inherited properties and it is never
+        a problem.</p></details>
     <details><summary>I already have an agent. Should I still do this?<span class="pm">+</span></summary>
-      <p>Not yet. While you are under a listing agreement we stay out of it, both out of courtesy and because
-        depending on your contract it can create a problem for you. Come back if the listing expires.</p></details>
+      <p>Not yet. While you are under a listing agreement we stay out of it, both out of courtesy and
+        because depending on your contract it can create a problem for you. Come back if the listing
+        expires.</p></details>
     <details><summary>Who actually sees my information?<span class="pm">+</span></summary>
-      <p>We do. We are the buyer, not a lead site. Your details are not sold on to a list of investors, which
-        is what happens on most forms that look like this one.</p></details>
+      <p>We do. We are the buyer, not a lead site. Your details are not sold on to a list of investors,
+        which is what happens on most forms that look like this one.</p></details>
   </div>
 </div></section>
 
 <div class="final"><div class="wrap">
   <h2>Find out which routes are actually open to you.</h2>
-  <p>About two minutes of questions, and you will see which of the four structures fit your numbers and which
-    ones do not. No obligation, and no commitment to sell.</p>
+  <p>About two minutes of questions, and you will see which of the four structures fit your numbers and
+    which ones do not. No obligation, and no commitment to sell.</p>
   <div class="row">
-    <a class="btn btn-g" href="#quiz">Show Me My Options</a>
-    <a class="btn btn-ghost" href="tel:5125550142">Call (512) 555-0142</a>
+    <a class="btn btn-act" href="#quiz">Show Me My Options</a>
+    <a class="btn btn-ghost" data-cfg-href="phoneHref" href="tel:8888888888">Call <span data-cfg="phone">(888) 888-8888</span></a>
   </div>
 </div></div>
 
 <footer><div class="wrap">
   <div>
-    <b>Home Sale Options</b>
-    We buy houses directly from owners in Austin and the surrounding counties, structured as a cash purchase,
-    seller financing, or taking over an existing loan. We are the buyer, not an agent and not a lead broker.
+    <b data-cfg="company">Home Sale Options</b>
+    We buy houses directly from owners, structured as a cash purchase, seller financing, or taking over an
+    existing loan. We are the buyer, not an agent and not a lead broker.
   </div>
   <div>
     <b>Talk to us</b>
-    <a href="tel:5125550142">(512) 555-0142</a><br>
-    <a href="mailto:hello@example.com">hello@example.com</a><br>
-    Monday to Saturday, 8am to 7pm
+    <a data-cfg-href="phoneHref" href="tel:8888888888"><span data-cfg="phone">(888) 888-8888</span></a><br>
+    <span data-cfg="email">hello@yourcompany.com</span><br>
+    <span data-cfg="hours">Monday to Saturday, 8am to 7pm</span>
   </div>
   <div>
     <b>The small print</b>
@@ -580,15 +689,15 @@ footer a{color:#A8B8CA}
   <div class="legal" style="grid-column:1/-1">
     Nothing on this page is an offer to purchase, legal advice, tax advice, or financial advice. Any offer
     follows a walkthrough and is set out in writing. Seller financing and taking over an existing loan are
-    binding contracts with long-term consequences; have your own attorney review any agreement before signing.
-    If you are facing foreclosure you may have options that do not involve selling, and you should speak to a
-    HUD-approved housing counselor as well as to us.
+    binding contracts with long-term consequences; have your own attorney review any agreement before
+    signing. If you are facing foreclosure you may have options that do not involve selling, and you should
+    speak to a HUD-approved housing counselor as well as to us.
   </div>
 </div></footer>
 
 <div class="callbar">
-  <a class="btn btn-line" href="tel:5125550142">Call</a>
-  <a class="btn btn-g" href="#quiz">My Options</a>
+  <a class="btn btn-line" data-cfg-href="phoneHref" href="tel:8888888888">Call</a>
+  <a class="btn btn-act" href="#quiz">My Options</a>
 </div>
 
 <script>
@@ -609,7 +718,20 @@ footer a{color:#A8B8CA}
    SUBMIT: front end only. Point submitLead() at the CRM
    webhook before this runs on paid traffic.
 ===================================================== */
-var MARKET = "the Austin area";
+/* ---------------------------------------------------------------
+   TEMPLATE CONFIG. Everything client-specific lives here and
+   nowhere else. Swap these six values per investor and the whole
+   page, quiz, header, footer and call bar follow.
+--------------------------------------------------------------- */
+var CONFIG = {
+  company:  "Home Sale Options",      // e.g. "Cleveland Cash Offers"
+  market:   "the metro area",         // e.g. "Central Texas", "Northwest Florida"
+  phone:    "(888) 888-8888",
+  phoneHref:"tel:8888888888",
+  email:    "hello@yourcompany.com",
+  hours:    "Monday to Saturday, 8am to 7pm"
+};
+var MARKET = CONFIG.market;
 
 /* `key:true` marks the questions that still get asked when a
    situation is a secondary one, because they change the outcome. */
@@ -728,7 +850,7 @@ var BRANCHES = {
    Location first, because it is the fastest way to stop wasting somebody's time. */
 var COMMON = [
   {id:"location", q:"Where is the property?", sub:"We buy in "+MARKET+" and the counties around it.",
-   opts:["In "+MARKET,"Just outside "+MARKET,"Elsewhere in Texas","Another state"]},
+   opts:["In "+MARKET,"Just outside "+MARKET,"Elsewhere in the state","Another state"]},
   {id:"title", q:"Are you the owner on the title?", sub:"We can only work with somebody who is able to sign.",
    opts:["Yes, I am the owner","Yes, one of several owners","I am the executor, or I hold power of attorney","No, I am family helping out","No, I rent here"]},
   {id:"listed", q:"Is it listed with an agent right now?",
@@ -891,7 +1013,7 @@ function back(){
 
 function routeOut(a){
   if(a.title==="No, I rent here") return "renter";
-  if(a.location==="Elsewhere in Texas"||a.location==="Another state") return "outofarea";
+  if(a.location==="Elsewhere in the state"||a.location==="Another state") return "outofarea";
   if(a.listed==="Yes, it is listed now") return "listed";
   if(a.listed==="It is under contract") return "contract";
   return null;
@@ -1273,6 +1395,20 @@ function utm(){
   return o;
 }
 
+/* Paint the config into the static markup so there is one source of truth. */
+function applyConfig(){
+  document.querySelectorAll("[data-cfg]").forEach(function(el){
+    var k=el.getAttribute("data-cfg");
+    if(CONFIG[k]!==undefined) el.textContent=CONFIG[k];
+  });
+  document.querySelectorAll("[data-cfg-href]").forEach(function(el){
+    var k=el.getAttribute("data-cfg-href");
+    if(CONFIG[k]!==undefined) el.setAttribute("href",CONFIG[k]);
+  });
+  document.title = CONFIG.company;
+}
+
+applyConfig();
 start();
 </script>
 </body>
