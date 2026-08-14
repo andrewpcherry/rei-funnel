@@ -967,9 +967,11 @@ function outcomeHtml(){
   }
 
   var f=fits(), isGuide=(S.branch==="comparing");
+  /* Always show at least two. A page that promises four ways and then hands back
+     one card reads like a pitch, not a comparison. */
   var good=f.order.filter(function(k){return f.scores[k].s>0;});
-  var bad=f.order.filter(function(k){return f.scores[k].s<=0;});
-  if(!good.length){ good=[f.order[0]]; bad=f.order.slice(1); }
+  if(good.length<2) good=f.order.slice(0,2);
+  var bad=f.order.filter(function(k){return good.indexOf(k)<0;});
 
   var h='<div class="fade"><span class="oc-flag" style="--c:'+m.c+';--cs:'+m.cs+'">Based on what you told us</span>'
     +'<div class="oc-h">'+esc(m.headline)+'</div>'
@@ -978,11 +980,12 @@ function outcomeHtml(){
 
   good.forEach(function(k,idx){
     var st=STRUCTURES[k], sc=f.scores[k];
-    var why=sc.why.length ? sc.why.slice(0,2).join(", and ") : "worth pricing against the others";
+    var strong=sc.s>0;
+    var why=sc.why.length ? sc.why.slice(0,2).join(", and ")
+      : (strong ? "it holds up against your numbers" : "it is the next closest, and worth hearing before you rule it out");
+    var badge = idx===0 ? "Best fit for you" : (strong ? "Also worth pricing" : "Worth asking about");
     h+='<div class="route'+(idx===0?' best':'')+'" style="--rc:'+st.c+';--rcs:'+st.cs+'">'
-      +'<div class="rh"><h4>'+esc(st.name)+'</h4>'
-      +(idx===0?'<span class="badge">Best fit for you</span>':'<span class="badge">Also worth pricing</span>')
-      +'</div>'
+      +'<div class="rh"><h4>'+esc(st.name)+'</h4><span class="badge">'+badge+'</span></div>'
       +'<div class="why">Because '+esc(why)+'.</div>'
       +'<p>'+esc(st.body)+'</p>'
       +(st.caution?'<div class="flagline"><b>Read this part twice.</b> '+esc(st.caution)+'</div>':'')
