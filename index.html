@@ -1,0 +1,729 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Branching qualification funnel for motivated home sellers. Six situations, six named reviews, four routing tiers.">
+<title>Seller Situation Router</title>
+<style>
+:root{
+  --surface:#F4F7FB; --panel:#FFFFFF; --panel-2:#EEF3FB; --panel-3:#E7EEF8;
+  --line:#D9E2EE; --ink:#142033; --ink-soft:#5E6B7C;
+  --midnight:#0B1F3B; --midnight-deep:#061229;
+  --electric:#2563EB; --electric-soft:#DCE7FB;
+  --emerald:#16A34A; --emerald-hover:#128A3D; --emerald-soft:#DCFCE7;
+  --orange:#F97316; --orange-soft:#FFE6D1;
+  --coral:#EF4444; --coral-soft:#FEE2E2;
+  --violet:#7C3AED; --violet-soft:#EDE4FE;
+  --radius:0.9rem;
+  --shadow-sm:0 1px 2px rgba(15,30,55,.05);
+  --shadow-card:0 2px 6px rgba(11,31,59,.06), 0 12px 32px rgba(11,31,59,.09);
+  --shadow-cta:0 10px 24px rgba(22,163,74,.30);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--surface);color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+  -webkit-font-smoothing:antialiased;line-height:1.55}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+.eyebrow{display:inline-block;font-size:11.5px;font-weight:800;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--emerald)}
+h1,h2,h3,h4{margin:0;letter-spacing:-.02em}
+p{margin:0}
+a{color:inherit}
+
+/* ---------- header ---------- */
+.topbar{background:var(--panel);border-bottom:1px solid var(--line)}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-top:14px;padding-bottom:14px}
+.brand{font-weight:900;font-size:17px;letter-spacing:-.02em}
+.brand span{color:var(--emerald)}
+.topbar .meta{font-size:12.5px;color:var(--ink-soft);font-weight:600}
+
+/* ---------- hero ---------- */
+.hero{padding:44px 0 8px}
+.hero h1{font-size:clamp(28px,4.4vw,50px);font-weight:900;line-height:1.06;margin-top:14px;max-width:16ch}
+.hero .lede{margin-top:16px;max-width:60ch;font-size:17px;color:var(--ink-soft)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.chip{font-size:12px;font-weight:800;padding:6px 12px;border-radius:999px}
+.chip.g{background:var(--emerald-soft);color:var(--emerald)}
+.chip.b{background:var(--electric-soft);color:var(--electric)}
+.chip.o{background:var(--orange-soft);color:#C2410C}
+
+/* ---------- quiz shell ---------- */
+.quiz{padding:34px 0 60px}
+.shell{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow-card);overflow:hidden;transition:border-color .25s}
+.shell-top{background:var(--midnight);color:#fff;padding:18px 24px}
+.shell-top .row{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.shell-top .t{font-weight:800;font-size:16px}
+.shell-top .s{font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;
+  background:rgba(255,255,255,.14);padding:5px 12px;border-radius:999px;white-space:nowrap}
+.bar{height:5px;background:rgba(255,255,255,.16);border-radius:999px;margin-top:14px;overflow:hidden}
+.bar>i{display:block;height:100%;background:var(--emerald);border-radius:999px;
+  width:0;transition:width .3s ease}
+.shell-body{padding:28px 24px 30px}
+@media(min-width:720px){.shell-body{padding:36px 40px 40px}}
+
+.q-h{font-size:clamp(20px,2.6vw,27px);font-weight:900;line-height:1.22}
+.q-sub{margin-top:7px;font-size:14.5px;color:var(--ink-soft)}
+.opts{display:grid;gap:10px;margin-top:22px}
+@media(min-width:760px){.opts.two{grid-template-columns:1fr 1fr}}
+.opt{display:flex;align-items:center;gap:13px;width:100%;text-align:left;cursor:pointer;
+  background:var(--panel);border:1.5px solid var(--line);border-radius:12px;
+  padding:15px 16px;font:inherit;font-size:15.5px;font-weight:650;color:var(--ink);
+  transition:border-color .15s, background .15s, transform .1s, box-shadow .15s}
+.opt:hover{border-color:var(--accent,var(--emerald));background:var(--accent-soft,var(--emerald-soft));
+  box-shadow:var(--shadow-sm)}
+.opt:active{transform:translateY(1px)}
+.opt .dot{width:19px;height:19px;border-radius:50%;border:2px solid var(--line);flex:0 0 auto;
+  transition:border-color .15s,background .15s}
+.opt:hover .dot{border-color:var(--accent,var(--emerald));background:var(--accent,var(--emerald))}
+
+/* situation cards on the entry screen */
+.cards{display:grid;gap:12px;margin-top:22px}
+@media(min-width:720px){.cards{grid-template-columns:1fr 1fr}}
+.card{text-align:left;cursor:pointer;font:inherit;background:var(--panel);
+  border:1.5px solid var(--line);border-radius:14px;padding:18px 18px 17px;
+  transition:border-color .15s,box-shadow .15s,transform .12s}
+.card:hover{border-color:var(--c);box-shadow:var(--shadow-card);transform:translateY(-2px)}
+.card .tag{display:inline-block;font-size:10.5px;font-weight:900;letter-spacing:.14em;
+  text-transform:uppercase;padding:4px 9px;border-radius:6px;background:var(--cs);color:var(--c)}
+.card h4{margin-top:11px;font-size:17px;font-weight:850;line-height:1.25}
+.card p{margin-top:6px;font-size:13.5px;color:var(--ink-soft);line-height:1.5}
+
+.nav{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:24px;
+  padding-top:18px;border-top:1px solid var(--line)}
+.back{background:none;border:0;font:inherit;font-size:14px;font-weight:750;color:var(--ink-soft);
+  cursor:pointer;padding:8px 2px}
+.back:hover{color:var(--ink)}
+.trail{font-size:12.5px;color:var(--ink-soft);font-weight:650;text-align:right}
+
+/* ---------- outcome ---------- */
+.oc-flag{display:inline-block;font-size:11px;font-weight:900;letter-spacing:.16em;
+  text-transform:uppercase;padding:6px 12px;border-radius:999px;background:var(--cs);color:var(--c)}
+.oc-h{margin-top:14px;font-size:clamp(22px,3vw,31px);font-weight:900;line-height:1.16}
+.oc-p{margin-top:14px;font-size:16px;color:var(--ink-soft);max-width:64ch}
+.oc-points{list-style:none;padding:0;margin:22px 0 0;display:grid;gap:9px}
+@media(min-width:760px){.oc-points{grid-template-columns:1fr 1fr}}
+.oc-points li{display:flex;gap:11px;align-items:flex-start;background:var(--panel-2);
+  border:1px solid var(--line);border-radius:11px;padding:13px 15px;font-size:14.5px;font-weight:650}
+.oc-points li b{color:var(--c);flex:0 0 auto;font-size:15px;line-height:1.4}
+.oc-note{margin-top:18px;background:var(--panel-3);border:1px solid var(--line);border-radius:11px;
+  padding:14px 16px;font-size:14px;color:var(--ink-soft)}
+.oc-note b{color:var(--ink)}
+
+.form{margin-top:26px;padding-top:26px;border-top:1px solid var(--line)}
+.form h4{font-size:18px;font-weight:850}
+.grid2{display:grid;gap:14px;margin-top:16px}
+@media(min-width:640px){.grid2{grid-template-columns:1fr 1fr}}
+label.fl{display:block;font-size:13.5px;font-weight:750;margin-bottom:6px}
+.in{width:100%;border:1px solid var(--line);border-radius:10px;padding:12px 13px;
+  font:inherit;font-size:15.5px;background:#fff;color:var(--ink)}
+.in:focus{outline:none;border-color:var(--emerald);box-shadow:0 0 0 3px rgba(22,163,74,.18)}
+.consent{display:flex;gap:11px;align-items:flex-start;margin-top:16px;background:var(--panel-2);
+  border:1px solid var(--line);border-radius:11px;padding:14px 15px;font-size:13.5px;color:var(--ink-soft)}
+.consent input{margin-top:3px;width:17px;height:17px;accent-color:var(--emerald);flex:0 0 auto}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;border:0;cursor:pointer;
+  font:inherit;font-weight:800;font-size:16px;padding:15px 26px;border-radius:11px;text-decoration:none}
+.btn-g{background:var(--emerald);color:#fff;box-shadow:var(--shadow-cta);width:100%;margin-top:18px}
+.btn-g:hover{background:var(--emerald-hover)}
+.btn-line{background:var(--panel);border:1.5px solid var(--line);color:var(--ink)}
+.fineprint{margin-top:13px;font-size:12.5px;color:var(--ink-soft);text-align:center}
+
+/* route-out screens */
+.ro-flag{display:inline-block;font-size:11px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;
+  padding:6px 12px;border-radius:999px;background:var(--panel-3);color:var(--ink-soft)}
+.ro-actions{display:flex;flex-wrap:wrap;gap:11px;margin-top:22px}
+
+/* ---------- internal routing panel ---------- */
+.dev{margin-top:26px;border:1px dashed #94A3B8;border-radius:12px;background:#0B1F3B;color:#CBD5E1;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;overflow:hidden}
+.dev-h{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;
+  background:rgba(255,255,255,.05);border-bottom:1px solid rgba(255,255,255,.12);
+  font-family:inherit;font-weight:700;letter-spacing:.04em;text-transform:uppercase;font-size:11px;color:#94A3B8}
+.dev-b{padding:16px;white-space:pre-wrap;word-break:break-word;line-height:1.65;max-height:420px;overflow:auto}
+.tier{display:inline-block;padding:3px 9px;border-radius:5px;font-weight:800}
+.tier.A{background:#16A34A;color:#fff}
+.tier.B{background:#F97316;color:#fff}
+.tier.C{background:#2563EB;color:#fff}
+.tier.X{background:#64748B;color:#fff}
+.devtoggle{background:none;border:1px solid rgba(255,255,255,.3);color:#CBD5E1;border-radius:7px;
+  padding:5px 11px;font:inherit;font-size:11px;font-weight:700;cursor:pointer}
+
+/* ---------- spec section ---------- */
+.spec{background:var(--panel);border-top:1px solid var(--line);padding:56px 0 70px}
+.spec h2{font-size:clamp(22px,3vw,32px);font-weight:900}
+.spec .lede{margin-top:12px;max-width:70ch;color:var(--ink-soft);font-size:16px}
+.tblwrap{margin-top:26px;overflow-x:auto;border:1px solid var(--line);border-radius:12px}
+table{border-collapse:collapse;width:100%;min-width:720px;font-size:14px}
+th,td{text-align:left;padding:13px 15px;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:var(--panel-2);font-size:11.5px;font-weight:850;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);white-space:nowrap}
+tr:last-child td{border-bottom:0}
+td b{font-weight:800}
+.pill{display:inline-block;font-size:10.5px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;
+  padding:3px 8px;border-radius:5px;white-space:nowrap}
+.pill.A{background:var(--emerald-soft);color:var(--emerald)}
+.pill.B{background:var(--orange-soft);color:#C2410C}
+.pill.C{background:var(--electric-soft);color:var(--electric)}
+.pill.X{background:var(--panel-3);color:var(--ink-soft)}
+.two-col{display:grid;gap:22px;margin-top:30px}
+@media(min-width:860px){.two-col{grid-template-columns:1fr 1fr}}
+.note{border:1px solid var(--line);border-radius:12px;padding:20px 22px;background:var(--panel-2)}
+.note h4{font-size:16px;font-weight:850}
+.note ul{margin:11px 0 0;padding-left:19px;color:var(--ink-soft);font-size:14.5px}
+.note li{margin-bottom:7px}
+.foot{background:var(--midnight-deep);color:#93A2B2;padding:26px 0;font-size:13px}
+.foot .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+</style>
+</head>
+<body>
+
+<div class="topbar"><div class="wrap">
+  <div class="brand">Home Sale <span>Options</span></div>
+  <div class="meta">Branching qualification build, v1</div>
+</div></div>
+
+<div class="wrap hero">
+  <span class="eyebrow">Find your situation</span>
+  <h1>Every seller's situation has a different right answer.</h1>
+  <p class="lede">Tell us what is actually going on with the property. The questions change based on your
+    answer, and you get the review that fits your situation instead of a generic cash offer form.</p>
+  <div class="chips">
+    <span class="chip g">No obligation</span>
+    <span class="chip b">Local buyer</span>
+    <span class="chip o">Not a listing agreement</span>
+  </div>
+</div>
+
+<div class="wrap quiz">
+  <div class="shell" id="shell">
+    <div class="shell-top">
+      <div class="row">
+        <div class="t" id="qTitle">Find my situation</div>
+        <div class="s" id="qStep">Start</div>
+      </div>
+      <div class="bar"><i id="qBar"></i></div>
+    </div>
+    <div class="shell-body" id="qBody"></div>
+  </div>
+
+  <div class="dev" id="dev">
+    <div class="dev-h">
+      <span>Internal lead routing, not shown to the seller</span>
+      <button class="devtoggle" id="devBtn" type="button">Hide</button>
+    </div>
+    <div class="dev-b" id="devBody">Answer the questions to see the routing payload build.</div>
+  </div>
+</div>
+
+<div class="spec"><div class="wrap">
+  <span class="eyebrow">The architecture</span>
+  <h2>Six situations, six named reviews, four routing tiers</h2>
+  <p class="lede">The roofer funnel proved the mechanic: name the situation, ask only the questions that
+    situation needs, then hand back a specific next step instead of a generic quote. Seller motivation
+    fragments harder than roof damage does, so this version adds conditional follow-ups, four
+    disqualifying routes, and a tier the CRM can act on.</p>
+
+  <div class="tblwrap"><table>
+    <thead><tr><th>Situation branch</th><th>What it asks that nothing else does</th><th>Named outcome</th><th>Typical tier</th></tr></thead>
+    <tbody>
+      <tr><td><b>Inherited or estate</b></td><td>Probate stage, how many heirs, whether the heirs agree, whether the house is still full of belongings</td><td>Inherited Property Review</td><td><span class="pill B">B</span> until heirs align</td></tr>
+      <tr><td><b>Needs work</b></td><td>Which system is failing, whether they have real repair numbers, and the free-repairs test that separates condition from motivation</td><td>As-Is Condition and Net Proceeds Review</td><td><span class="pill A">A</span> when quoted</td></tr>
+      <tr><td><b>Deadline or lien</b></td><td>What the pressure is, whether a date is set, whether the lender is engaged, equity position</td><td>Time-Sensitive Options Review</td><td><span class="pill A">A</span> on a set date</td></tr>
+      <tr><td><b>Done landlording</b></td><td>Tenant status, unit count, what tipped them over</td><td>Tenant-Occupied Sale Review</td><td><span class="pill A">A</span> or <span class="pill B">B</span></td></tr>
+      <tr><td><b>Moving by a date</b></td><td>What is driving the move, whether both parties agree if it is a separation, date certainty versus price, post-close possession</td><td>Certain-Close Timeline Review</td><td><span class="pill A">A</span> inside 60 days</td></tr>
+      <tr><td><b>Comparing options</b></td><td>Which number they are actually trying to work out, and how far along they are</td><td>Options Comparison and the Guide</td><td><span class="pill C">C</span> nurture</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="two-col">
+    <div class="note">
+      <h4>The four questions every branch still asks</h4>
+      <ul>
+        <li><b>Title.</b> Owner, one of several owners, executor or power of attorney, family member helping, or a tenant. Anyone who cannot sign gets routed, not chased.</li>
+        <li><b>Occupancy.</b> Owner, tenant, vacant, or someone else. Skipped on the landlord branch because it was already asked.</li>
+        <li><b>Listing status.</b> Currently listed and under contract both route out. An expired listing routes in as a strong lead.</li>
+        <li><b>Location and timeline.</b> Out of market ends the flow honestly instead of collecting a lead nobody will call.</li>
+      </ul>
+    </div>
+    <div class="note">
+      <h4>What this changes downstream</h4>
+      <ul>
+        <li><b>Tier A</b> fires an immediate call task. Owner, in market, not listed, inside 60 days, or a set legal date.</li>
+        <li><b>Tier B</b> goes to a sequence. Real situation, unresolved blocker, usually heirs or a decision not yet made.</li>
+        <li><b>Tier C</b> gets the guide and a slow nurture. Researching, more than 90 days out, or just curious.</li>
+        <li><b>Routed out</b> never enters the pipeline. Tenants, out-of-area owners, and actively listed properties get a straight answer and an exit.</li>
+      </ul>
+    </div>
+  </div>
+</div></div>
+
+<div class="foot"><div class="wrap">
+  <div>Home Sale Options, branching qualification build</div>
+  <div>Front-end only. Wire the submit handler to the CRM webhook before launch.</div>
+</div></div>
+
+<script>
+/* =====================================================
+   SELLER SITUATION ROUTER
+   Branches: inherited / condition / deadline / rental / moving / comparing
+   Common qualifiers run after the branch, with conditional skipping.
+   Route-outs: renter, out-of-area, actively listed, under contract.
+   SUBMIT: front-end demo only. Point it at the CRM webhook before launch.
+===================================================== */
+
+var MARKET = "the local area";
+
+var BRANCHES = {
+  inherited: {
+    label:"Inherited or estate", tag:"Estate", c:"var(--violet)", cs:"var(--violet-soft)",
+    card:"I inherited a property or I'm handling an estate",
+    blurb:"Probate, multiple heirs, a house full of belongings, and nobody living close by.",
+    title:"An Inherited Property Review",
+    copy:"Based on what you told us, the right next step is an inherited property review. Estate sales stall on three things: where probate stands, whether every heir is on the same page, and what to do with everything still in the house. We work through those in order, so you know what you can actually sell and when, before anybody talks about a number.",
+    points:[
+      "Where your probate stage leaves you, in plain English",
+      "What happens when heirs are not aligned yet",
+      "Cleanout handled, you take what you want and leave the rest",
+      "A listed number and an as-is number side by side"
+    ],
+    extra:{name:"heirNotes", label:"Anything about the estate we should know before we call? (optional)"},
+    qs:[
+      {id:"probate", q:"Where does the estate stand?", sub:"Best guess is fine, this is the first thing we check anyway.",
+       opts:["Probate is finished","It is in probate now","Probate has not started","No probate needed, it transferred directly","I am not sure"]},
+      {id:"heirs", q:"Who else has a claim on the property?", sub:"This decides who has to sign.",
+       opts:["Just me","Me and one other person","Three or more heirs","I am not sure yet"]},
+      {id:"agreed", q:"Are the other heirs agreed on selling?", sub:"An honest answer here saves everyone weeks.",
+       when:function(a){return a.heirs && a.heirs.indexOf("Just me")!==0 && a.heirs.indexOf("not sure")<0;},
+       opts:["Yes, everyone agrees","Mostly, we are close","No, we are not aligned","We have not discussed it"]},
+      {id:"contents", q:"What is still inside the house?",
+       opts:["It is fully cleared","Some furniture and belongings","Completely full","I have not been inside"]}
+    ]
+  },
+
+  condition: {
+    label:"Needs work", tag:"Condition", c:"var(--orange)", cs:"var(--orange-soft)",
+    card:"The house needs work I don't want to take on",
+    blurb:"Repairs, deferred maintenance, or damage that makes listing it feel impossible.",
+    title:"An As-Is Condition and Net Proceeds Review",
+    copy:"Based on what you told us, the right next step is an as-is condition and net proceeds review. The question is never just what the house is worth. It is what you would walk away with after the repairs a buyer's lender would demand, versus what you would walk away with selling it exactly as it stands today. We put both numbers on one page.",
+    points:[
+      "What the condition actually blocks, and what it does not",
+      "Repair cost against the price lift it would buy you",
+      "Net proceeds listed versus net proceeds as-is",
+      "No repairs, no cleaning, no showings if you go the direct route"
+    ],
+    extra:{name:"conditionNotes", label:"Briefly, what is wrong with it? (optional)"},
+    qs:[
+      {id:"issue", q:"What is the main problem?", sub:"Pick the biggest one.",
+       opts:["The roof","Foundation or structural","Plumbing, electrical or HVAC","Fire, water or mold damage","Dated throughout, nothing broken","Several of these"]},
+      {id:"quoted", q:"Have you had the work priced?",
+       opts:["Yes, I have real numbers","I have a rough idea","No quotes yet","I would rather not find out"]},
+      {id:"motivation", q:"If the repairs were somehow free, would you still sell?", sub:"There is no wrong answer, it just changes what we bring you.",
+       opts:["Yes, I would still sell","No, I would stay","I am honestly not sure"]}
+    ]
+  },
+
+  deadline: {
+    label:"Deadline or lien", tag:"Time pressure", c:"var(--coral)", cs:"var(--coral-soft)",
+    card:"I'm up against a payment, a lien or a deadline",
+    blurb:"Missed payments, back taxes, a code notice, or a date that is already on the calendar.",
+    title:"A Time-Sensitive Options Review",
+    copy:"Based on what you told us, the right next step is a time-sensitive options review. When there is a date on the calendar, the worst outcome is finding out too late that a cheaper option existed. We map every route still open to you, including reinstatement, a listing if there is time, and a direct purchase, and we tell you plainly which ones the calendar has already closed.",
+    points:[
+      "Every option still open, including the ones that are not selling to us",
+      "What your date actually requires, and by when",
+      "Where your equity sits once the arrears and liens come off",
+      "A direct purchase priced against a real closing date, if that is the route"
+    ],
+    extra:{name:"deadlineNotes", label:"What is the date you are working against? (optional)"},
+    qs:[
+      {id:"pressure", q:"What is the pressure?",
+       opts:["Behind on mortgage payments","Property taxes owed","A lien, code violation or city notice","A court or auction date is set","Payments are current, the deadline is personal"]},
+      {id:"dateset", q:"Has a date actually been set?", sub:"This is the single most important thing you can tell us.",
+       when:function(a){return a.pressure && (a.pressure.indexOf("Behind")===0 || a.pressure.indexOf("A court")===0 || a.pressure.indexOf("A lien")===0);},
+       opts:["Yes, within 30 days","Yes, more than 30 days out","No date yet","I do not know"]},
+      {id:"lender", q:"Have you talked to the lender or the county?",
+       opts:["Yes, we are working on something","I have tried, no progress","Not yet","I would rather not"]},
+      {id:"equity", q:"Roughly, how does what you owe compare to what it is worth?", sub:"A rough guess is genuinely fine.",
+       opts:["I owe far less than it is worth","I owe about half","I owe close to what it is worth","I owe more than it is worth","No idea"]}
+    ]
+  },
+
+  rental: {
+    label:"Done landlording", tag:"Rental", c:"var(--electric)", cs:"var(--electric-soft)",
+    card:"I own a rental I'm done with",
+    blurb:"Tenants, turnover, repairs stacking up, or a property you manage from too far away.",
+    title:"A Tenant-Occupied Sale Review",
+    copy:"Based on what you told us, the right next step is a tenant-occupied sale review. Most landlords assume they have to empty the property before they can sell it, which means an eviction, a turnover, and months of carrying costs first. Usually they do not. We look at whether the property sells better occupied or vacant, and what each route costs you between now and closing.",
+    points:[
+      "Sell with tenants in place, no eviction and no turnover",
+      "Occupied versus vacant, priced both ways",
+      "What the lease and the security deposits mean at closing",
+      "Portfolio handled as one transaction if there is more than one"
+    ],
+    extra:{name:"rentalNotes", label:"Address or unit count if it is more than one property (optional)"},
+    qs:[
+      {id:"tenants", q:"What is the tenant situation?",
+       opts:["Occupied and paying","Occupied and behind on rent","Occupied, the lease is ending soon","It is vacant right now","We are mid-eviction"]},
+      {id:"units", q:"How much are we talking about?",
+       opts:["One property","Two to four units","Five or more units","A small portfolio across several addresses"]},
+      {id:"trigger", q:"What tipped you into selling?",
+       opts:["Tired of managing it","It stopped cash flowing","Repairs keep stacking up","Rebalancing or cashing out","I am out of state and it is a hassle"]}
+    ]
+  },
+
+  moving: {
+    label:"Moving by a date", tag:"Timeline", c:"var(--emerald)", cs:"var(--emerald-soft)",
+    card:"I need to be out by a certain date",
+    blurb:"A job, a separation, a downsize, or a purchase that depends on this one closing.",
+    title:"A Certain-Close Timeline Review",
+    copy:"Based on what you told us, the right next step is a certain-close timeline review. When a date matters more than the last few thousand dollars, the risk is not price, it is a buyer whose financing falls through in week five and puts you back at the start. We work backwards from your date and show you which routes can actually hold it.",
+    points:[
+      "Your date worked backwards, route by route",
+      "What financing risk really costs when a date is fixed",
+      "Stay in the house after closing if you need the time",
+      "The price gap between certainty and open market, stated plainly"
+    ],
+    extra:{name:"movingNotes", label:"What date are you working towards? (optional)"},
+    qs:[
+      {id:"driver", q:"What is driving the move?",
+       opts:["A job or relocation","Downsizing or upsizing","Divorce or separation","Health or family","I am buying another place first"]},
+      {id:"bothagree", q:"Are both parties agreed on selling?",
+       when:function(a){return a.driver && a.driver.indexOf("Divorce")===0;},
+       opts:["Yes, we both want to sell","Mostly, we are close","Not yet","The attorneys are handling it"]},
+      {id:"priority", q:"Which matters more to you?",
+       opts:["A closing date I can count on","The highest possible number","A balance of the two"]},
+      {id:"possession", q:"Do you need time in the house after closing?",
+       opts:["Yes, a few weeks","Yes, a month or more","No, I can be out at closing","Not sure yet"]}
+    ]
+  },
+
+  comparing: {
+    label:"Comparing options", tag:"Research", c:"#0EA5E9", cs:"#DFF3FD",
+    card:"I'm just comparing my options",
+    blurb:"No pressure and no deadline, you want to understand the numbers before deciding anything.",
+    title:"An Options Comparison and the Guide",
+    copy:"Based on what you told us, the right next step is a straight comparison and the guide, not a phone call. Listing, selling as-is, and a direct purchase each cost you something different, and the difference is rarely where people expect. Take the guide, work out your own numbers, and come back when you actually want a review.",
+    points:[
+      "Listing, as-is, and direct offer costed side by side",
+      "What each route really nets after fees, repairs and carrying costs",
+      "How long each one actually takes, start to keys",
+      "The Home Sale Options Guide, yours to keep, no call required"
+    ],
+    extra:null,
+    qs:[
+      {id:"question", q:"What are you actually trying to work out?",
+       opts:["What the house is genuinely worth","What I would net listing versus selling as-is","Whether a direct offer is a fair number","How fast each option really closes","Whether to sell at all"]},
+      {id:"stage", q:"How far along are you?",
+       opts:["Ready to move if the numbers work","Deciding over the next few months","A year or so out","Just curious"]}
+    ]
+  }
+};
+
+var COMMON = [
+  {id:"title", q:"Are you the owner on the title?", sub:"We can only work with someone who can actually sign.",
+   opts:["Yes, I am the owner","Yes, one of several owners","I am the executor or I hold power of attorney","No, I am family helping out","No, I rent here"]},
+  {id:"occupancy", q:"Who is in the property right now?",
+   when:function(a,branch){return branch!=="rental";},
+   opts:["I live there","A tenant","It is vacant","Family or someone else"]},
+  {id:"listed", q:"Is it listed with an agent right now?",
+   when:function(a,branch){return branch!=="comparing";},
+   opts:["No","It was listed, that agreement has ended","Yes, it is listed now","It is under contract"]},
+  {id:"location", q:"Where is the property?", sub:"We buy in "+MARKET+" and the surrounding counties.",
+   opts:["In "+MARKET,"Just outside "+MARKET,"Elsewhere in the state","Another state"]},
+  {id:"timeline", q:"How soon do you want this resolved?",
+   opts:["As soon as possible","Within 30 days","Thirty to ninety days","More than 90 days","It depends on the numbers"]}
+];
+
+var ROUTES = {
+  renter: {
+    flag:"Not a fit",
+    title:"We can only work with the owner on this one.",
+    copy:"You told us you rent the property. We buy directly from owners, so there is nothing we can do here without the person on the title. If the owner is thinking about selling, the fastest thing you can do is pass this page to them. If they sell to us, we will always talk to you about timing before anything is decided, because a sale does not automatically end a lease.",
+    points:["Your lease survives a sale in most cases","Pass this page to the owner if they are considering selling","Nothing further is needed from you"]
+  },
+  outofarea:{
+    flag:"Outside our area",
+    title:"That property is outside where we buy.",
+    copy:"We only buy in "+MARKET+" and the counties around it, and we would rather tell you that now than take your details and never call. The comparison in the guide holds anywhere, so take it with you. If you want, we will point you at a buyer who actually works in that market rather than passing your details around.",
+    points:["The guide works in any market, take it with you","We will refer you to a buyer who works there","We are not going to sit on your information"]
+  },
+  listed:{
+    flag:"Come back to us",
+    title:"While you are under a listing agreement, we stay out of it.",
+    copy:"You have an agent working for you, and stepping into that is both bad manners and, depending on your agreement, a problem for you. Let your agent do the job you hired them for. If the listing expires or you and your agent part ways, come straight back and we will run the review then. Take the guide in the meantime so you can judge the offers you do get.",
+    points:["Your agreement comes first, we will not interfere","Come back the day it expires and we will run the review","Take the guide so you can read any offer properly"]
+  },
+  contract:{
+    flag:"Already sold",
+    title:"You are under contract, so there is nothing for us to do.",
+    copy:"Congratulations. If that contract falls apart, which happens more often than anyone admits when financing is involved, come back and we will look at it the same day. Until then there is no reason for us to be in your inbox.",
+    points:["If the deal falls through, come back and we will move fast","No follow-up from us while your contract is live","Take the guide in case you need a plan B"]
+  }
+};
+
+/* ---------------- engine ---------------- */
+var S = null;
+
+function visibleQs(branch, answers){
+  return BRANCHES[branch].qs.filter(function(q){ return !q.when || q.when(answers); });
+}
+function visibleCommon(branch, answers){
+  return COMMON.filter(function(q){ return !q.when || q.when(answers, branch); });
+}
+function totalSteps(){
+  if(!S || !S.branch) return 1;
+  return 1 + visibleQs(S.branch, S.answers).length + visibleCommon(S.branch, S.answers).length + 1;
+}
+function stepNumber(){
+  if(!S || S.phase==="start") return 1;
+  var bq = visibleQs(S.branch, S.answers);
+  if(S.phase==="branch") return 2 + S.i;
+  if(S.phase==="common") return 2 + bq.length + S.i;
+  return totalSteps();
+}
+
+function start(){
+  S = {branch:null, phase:"start", i:0, answers:{}, trail:[]};
+  render();
+}
+
+function pickBranch(key){
+  S.branch = key; S.phase="branch"; S.i=0;
+  S.answers = {}; S.trail = [{q:"Situation", a:BRANCHES[key].label}];
+  render(true);
+}
+
+function answer(id, value, label){
+  S.answers[id] = value;
+  S.trail.push({q:label, a:value});
+  advance();
+}
+
+function advance(){
+  if(S.phase==="branch"){
+    var bq = visibleQs(S.branch, S.answers);
+    if(S.i+1 < bq.length){ S.i++; }
+    else { S.phase="common"; S.i=0; }
+  } else if(S.phase==="common"){
+    var cq = visibleCommon(S.branch, S.answers);
+    if(S.i+1 < cq.length){ S.i++; }
+    else { S.phase="outcome"; }
+  }
+  render(true);
+}
+
+function back(){
+  if(S.phase==="branch" && S.i===0){ start(); return; }
+  S.trail.pop();
+  if(S.phase==="outcome"){
+    S.phase="common"; S.i = visibleCommon(S.branch,S.answers).length-1;
+    delete S.answers[visibleCommon(S.branch,S.answers)[S.i].id];
+  } else if(S.phase==="common"){
+    if(S.i>0){ S.i--; delete S.answers[visibleCommon(S.branch,S.answers)[S.i].id]; }
+    else {
+      S.phase="branch"; S.i = visibleQs(S.branch,S.answers).length-1;
+      delete S.answers[visibleQs(S.branch,S.answers)[S.i].id];
+    }
+  } else {
+    S.i--; delete S.answers[visibleQs(S.branch,S.answers)[S.i].id];
+  }
+  render(true);
+}
+
+/* ---------------- routing / tiering ---------------- */
+function routeOut(a){
+  if(a.title === "No, I rent here") return "renter";
+  if(a.location === "Elsewhere in the state" || a.location === "Another state") return "outofarea";
+  if(a.listed === "Yes, it is listed now") return "listed";
+  if(a.listed === "It is under contract") return "contract";
+  return null;
+}
+
+function tier(){
+  var a = S.answers, b = S.branch;
+  if(routeOut(a)) return {t:"X", why:"Routed out before the pipeline"};
+
+  var soon = (a.timeline==="As soon as possible" || a.timeline==="Within 30 days");
+  var mid  = (a.timeline==="Thirty to ninety days" || a.timeline==="It depends on the numbers");
+  var canSign = (a.title==="Yes, I am the owner" || a.title==="I am the executor or I hold power of attorney");
+  var partial = (a.title==="Yes, one of several owners" || a.title==="No, I am family helping out");
+
+  if(b==="deadline" && a.dateset==="Yes, within 30 days") return {t:"A", why:"Legal date inside 30 days, call today"};
+  if(b==="comparing"){
+    if(a.stage==="Ready to move if the numbers work" && canSign && soon) return {t:"B", why:"Researching but ready if the numbers land"};
+    return {t:"C", why:"Research stage, guide and slow nurture"};
+  }
+  if(b==="condition" && a.motivation==="No, I would stay") return {t:"C", why:"Condition is the problem, not motivation. Repair referral, not a purchase"};
+  if(b==="inherited" && (a.agreed==="No, we are not aligned" || a.agreed==="We have not discussed it")) return {t:"B", why:"Heirs not aligned yet, sequence until they are"};
+  if(b==="moving" && a.bothagree==="Not yet") return {t:"B", why:"Both parties not agreed yet"};
+
+  if(canSign && soon) return {t:"A", why:"Can sign, wants it resolved inside 30 days"};
+  if(canSign && mid) return {t:"B", why:"Can sign, decision window is 30 to 90 days"};
+  if(partial && (soon||mid)) return {t:"B", why:"Real situation, second signature still needed"};
+  if(a.timeline==="More than 90 days") return {t:"C", why:"More than 90 days out, nurture"};
+  return {t:"B", why:"Qualified, no urgency signal yet"};
+}
+
+/* ---------------- render ---------------- */
+function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+function render(scroll){
+  var body = document.getElementById("qBody");
+  var shell = document.getElementById("shell");
+  var meta = S && S.branch ? BRANCHES[S.branch] : null;
+
+  shell.style.setProperty("--accent", meta ? meta.c : "var(--emerald)");
+  shell.style.setProperty("--accent-soft", meta ? meta.cs : "var(--emerald-soft)");
+  document.getElementById("qTitle").textContent = meta ? meta.label + ", find my next step" : "Find my situation";
+
+  var pct, stepLabel;
+  if(!S || S.phase==="start"){ pct = 4; stepLabel = "Start"; }
+  else if(S.phase==="outcome"){ pct = 100; stepLabel = "Your next step"; }
+  else { pct = Math.round(stepNumber()/totalSteps()*100); stepLabel = "Step " + stepNumber() + " of " + totalSteps(); }
+  document.getElementById("qBar").style.width = pct + "%";
+  document.getElementById("qStep").textContent = stepLabel;
+
+  var html = "";
+
+  if(S.phase === "start"){
+    html += '<div class="q-h">What is going on with the property?</div>'
+         +  '<div class="q-sub">Pick the closest fit. The questions after this change based on what you choose, and you can go back at any point.</div>'
+         +  '<div class="cards">';
+    Object.keys(BRANCHES).forEach(function(k){
+      var b = BRANCHES[k];
+      html += '<button class="card" style="--c:'+b.c+';--cs:'+b.cs+'" onclick="pickBranch(\''+k+'\')">'
+           +  '<span class="tag">'+esc(b.tag)+'</span>'
+           +  '<h4>'+esc(b.card)+'</h4>'
+           +  '<p>'+esc(b.blurb)+'</p></button>';
+    });
+    html += '</div>';
+  }
+  else if(S.phase === "branch" || S.phase === "common"){
+    var list = S.phase==="branch" ? visibleQs(S.branch,S.answers) : visibleCommon(S.branch,S.answers);
+    var q = list[S.i];
+    html += '<div class="q-h">'+esc(q.q)+'</div>'
+         +  (q.sub ? '<div class="q-sub">'+esc(q.sub)+'</div>' : '')
+         +  '<div class="opts'+(q.opts.length>4?' two':'')+'">';
+    q.opts.forEach(function(o){
+      html += '<button class="opt" onclick="answer(\''+q.id+'\',this.dataset.v,this.dataset.q)" '
+           +  'data-v="'+esc(o)+'" data-q="'+esc(q.q)+'"><span class="dot"></span><span>'+esc(o)+'</span></button>';
+    });
+    html += '</div>'
+         +  '<div class="nav"><button class="back" onclick="back()">Back</button>'
+         +  '<div class="trail">'+esc(BRANCHES[S.branch].label)+'</div></div>';
+  }
+  else {
+    html = outcomeHtml();
+  }
+
+  body.innerHTML = html;
+  renderDev();
+  if(scroll) document.getElementById("shell").scrollIntoView({behavior:"smooth", block:"start"});
+}
+
+function outcomeHtml(){
+  var out = routeOut(S.answers);
+  var m = BRANCHES[S.branch];
+
+  if(out){
+    var r = ROUTES[out];
+    var h = '<span class="ro-flag">'+esc(r.flag)+'</span>'
+      + '<div class="oc-h">'+esc(r.title)+'</div>'
+      + '<div class="oc-p">'+esc(r.copy)+'</div>'
+      + '<ul class="oc-points" style="--c:var(--ink-soft)">';
+    r.points.forEach(function(p){ h += '<li><b>&rsaquo;</b><span>'+esc(p)+'</span></li>'; });
+    h += '</ul><div class="ro-actions">'
+      + '<a class="btn btn-line" href="#" onclick="event.preventDefault();alert(\'Wire this to the guide PDF.\')">Get the Home Sale Options Guide</a>'
+      + '<button class="btn btn-line" onclick="start()">Start over</button></div>'
+      + '<div class="nav"><button class="back" onclick="back()">Back</button><div class="trail">Routed out, no lead created</div></div>';
+    return h;
+  }
+
+  var t = tier();
+  var cta = S.branch==="comparing" ? "Send Me the Guide" : "Book My "+m.title.replace(/^An |^A /,"");
+  var h = '<span class="oc-flag" style="--c:'+m.c+';--cs:'+m.cs+'">Your recommended next step</span>'
+    + '<div class="oc-h">'+esc(m.title)+'</div>'
+    + '<div class="oc-p">'+esc(m.copy)+'</div>'
+    + '<ul class="oc-points" style="--c:'+m.c+'">';
+  m.points.forEach(function(p){ h += '<li><b>&check;</b><span>'+esc(p)+'</span></li>'; });
+  h += '</ul>';
+
+  if(S.answers.title==="Yes, one of several owners" || S.answers.title==="No, I am family helping out"){
+    h += '<div class="oc-note"><b>One thing first.</b> Everyone on the title has to sign for a sale to close. '
+      +  'We can still do the review and get you real numbers to take back to them, but nothing binds anyone until every owner agrees.</div>';
+  }
+  if(S.answers.listed==="It was listed, that agreement has ended"){
+    h += '<div class="oc-note"><b>Worth knowing.</b> An expired listing tells us a lot about what the open market said about the price. '
+      +  'Bring the old listing details to the review and we will read them with you.</div>';
+  }
+
+  h += '<div class="form"><h4>Where should we send it?</h4>'
+    + '<div class="grid2">'
+    + fld("Full name","fullName","text","name")
+    + fld("Phone","phone","tel","tel")
+    + fld("Email","email","email","email")
+    + fld("Property address","address","text","street-address")
+    + '</div>';
+  if(m.extra){
+    h += '<div style="margin-top:14px"><label class="fl">'+esc(m.extra.label)+'</label>'
+      +  '<textarea class="in" rows="3" name="'+m.extra.name+'"></textarea></div>';
+  }
+  h += '<label class="consent"><input type="checkbox" id="consent">'
+    + '<span>I agree to be contacted about this property by phone, text or email. I understand this is '
+    + 'not a commitment to sell and that message and data rates may apply.</span></label>'
+    + '<button class="btn btn-g" onclick="submitLead()">'+esc(cta)+'</button>'
+    + '<div class="fineprint">No obligation. Not a listing agreement. Not a commitment to sell.</div>'
+    + '</div>'
+    + '<div class="nav"><button class="back" onclick="back()">Back</button>'
+    + '<div class="trail">Routing tier '+t.t+'</div></div>';
+  return h;
+}
+
+function fld(label,name,type,ac){
+  return '<div><label class="fl" for="'+name+'">'+esc(label)+'</label>'
+    + '<input class="in" id="'+name+'" name="'+name+'" type="'+type+'" autocomplete="'+ac+'"></div>';
+}
+
+function submitLead(){
+  var c = document.getElementById("consent");
+  if(c && !c.checked){ alert("Please tick the consent box so we can contact you."); return; }
+  alert("Front-end demo only.\n\nWire this handler to the CRM webhook. The full payload is in the internal routing panel below.");
+}
+
+/* ---------------- internal routing panel ---------------- */
+function renderDev(){
+  var el = document.getElementById("devBody");
+  if(!S || S.phase==="start"){
+    el.innerHTML = "Answer the questions to see the routing payload build.";
+    return;
+  }
+  var t = tier(), out = routeOut(S.answers);
+  var lines = [];
+  lines.push('tier        <span class="tier '+t.t+'">'+t.t+'</span>  '+esc(t.why));
+  lines.push('branch      '+S.branch);
+  lines.push('outcome     '+(out ? "ROUTE OUT: "+out : BRANCHES[S.branch].title));
+  lines.push('action      '+(out ? "no lead created, no follow-up"
+    : t.t==="A" ? "create lead + immediate call task"
+    : t.t==="B" ? "create lead + multi-touch sequence"
+    : "guide download + slow nurture, no call task"));
+  lines.push('');
+  lines.push('answers');
+  S.trail.forEach(function(x){
+    lines.push('  ' + esc(x.q) + '\n      ' + esc(x.a));
+  });
+  el.innerHTML = lines.join("\n");
+}
+
+document.getElementById("devBtn").addEventListener("click", function(){
+  var b = document.getElementById("devBody");
+  var hidden = b.style.display === "none";
+  b.style.display = hidden ? "" : "none";
+  this.textContent = hidden ? "Hide" : "Show";
+});
+
+start();
+</script>
+
+</body>
+</html>
