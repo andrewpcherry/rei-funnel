@@ -987,13 +987,17 @@ function tier(){
   return {t:"B",why:"no urgency signal"};
 }
 
+/* Pairs involving the most pressing situation come first, and we show at
+   most two. Three stacked red boxes stop being a warning and start being
+   wallpaper, and the overlapping pairs end up repeating each other. */
 function activeCombos(){
   var out=[], s=S.situations.slice().sort();
   for(var i=0;i<s.length;i++) for(var j=i+1;j<s.length;j++){
     var c=COMBOS[s[i]+"|"+s[j]];
-    if(c) out.push(c);
+    if(c) out.push({c:c, prim:(s[i]===S.primary||s[j]===S.primary)?0:1});
   }
-  return out;
+  out.sort(function(a,b){return a.prim-b.prim;});
+  return out.slice(0,2).map(function(x){return x.c;});
 }
 
 /* ---------------- render ---------------- */
