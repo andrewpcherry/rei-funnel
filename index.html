@@ -1089,6 +1089,7 @@ function setPrimary(k){ S.primary=k; S.phase="q"; S.i=0; render(true); }
    asks only the questions marked key. Common questions run once. */
 function queue(){
   var out=[], seen={};
+  if(!S || !S.primary) return out;   /* part of the public handoff API, must not throw */
   function push(bk,q){ if(seen[q.id]) return; if(q.when&&!q.when(S.answers,S.primary,has)) return; seen[q.id]=1; out.push({b:bk,q:q}); }
   BRANCHES[S.primary].qs.forEach(function(q){ push(S.primary,q); });
   S.situations.forEach(function(k){
@@ -1518,6 +1519,17 @@ function applyConfig(){
   document.title = CONFIG.company;
 }
 
+/* The assistant hands the seller's answers back into this quiz. Exported
+   explicitly rather than relying on these being implicit globals. */
+window.funnelQuiz = {
+  start:       start,
+  toggleSit:   toggleSit,
+  confirmSits: confirmSits,
+  answer:      answer,
+  queue:       queue,
+  state:       function(){ return S; }
+};
+
 applyConfig();
 start();
 </script>
@@ -1569,10 +1581,15 @@ start();
       var u=new SpeechSynthesisUtterance(text.replace(/\s+/g," "));
       if(voice) u.voice=voice;
       u.rate=1.02; u.pitch=1.0;
+      var fired=false;
+      function finish(){ if(fired) return; fired=true;
+        orb.classList.remove("speak"); status.textContent="Your turn"; if(done) done(); }
       u.onstart=function(){ orb.classList.add("speak"); status.textContent="Speaking"; };
-      u.onend=function(){ orb.classList.remove("speak"); status.textContent="Your turn"; if(done) done(); };
-      u.onerror=function(){ orb.classList.remove("speak"); if(done) done(); };
+      u.onend=finish;
+      u.onerror=finish;
       speechSynthesis.speak(u);
+      /* speechSynthesis drops onend often enough that it cannot be the only path forward */
+      setTimeout(finish, Math.max(3500, text.length*95));
     }catch(e){ if(done) done(); }
   }
 
@@ -1603,7 +1620,7 @@ start();
     list.forEach(function(c){
       var b=document.createElement("button");
       b.className="va-chip"+(c.go?" go":""); b.type="button"; b.textContent=c.t;
-      b.onclick=function(){ choose(c); };
+      b.onclick=function(){ if(c.act){ bubble(c.t,"me"); setChips([]); c.act(); } else { choose(c); } };
       chips.appendChild(b);
     });
     micRow.hidden = !(rec && list.length && !list[0].go);
@@ -1693,23 +1710,57 @@ start();
       });
   }
 
+  /* Carry what the seller already told the assistant into the page's own quiz,
+     so it never asks the same three questions twice. */
+  var TIMELINE_MAP={asap:"As soon as possible", mid:"Thirty to ninety days", slow:"More than 90 days"};
+  var EQUITY_MAP={free:"It is paid off, no mortgage", low:"I owe less than half of what it is worth",
+    half:"I owe about half", thin:"I owe close to what it is worth",
+    under:"I owe more than it is worth", unknown:"I am not sure"};
+
+  function seed(Q,id,value){
+    if(!value) return false;
+    var qq=Q.queue();
+    for(var i=0;i<qq.length;i++){
+      if(qq[i].q.id===id && qq[i].q.opts.indexOf(value)>=0){ Q.answer(id,value,qq[i].q.q); return true; }
+    }
+    return false;
+  }
+
+  function handoff(){
+    close();
+    var carried=0, Q=window.funnelQuiz;
+    try{
+      if(Q && answers.situation){
+        Q.start();
+        Q.toggleSit(answers.situation);
+        Q.confirmSits();
+        carried++;                                                  /* the situation */
+        if(seed(Q,"timeline", TIMELINE_MAP[answers.timeline])) carried++;
+        if(seed(Q,"equity",   EQUITY_MAP[answers.equity]))     carried++;
+      }
+    }catch(e){
+      if(window.console) console.warn("[assistant] handoff failed, seller starts the quiz fresh:", e);
+    }
+    var q=document.getElementById("quiz");
+    if(q) q.scrollIntoView({behavior:"smooth",block:"start"});
+    return carried;
+  }
+
   function closeOut(k){
     setChips([]);
     if(k==="yes"){
-      bot("Good. I will take a few details and someone will call you today. I am opening the form for you now.", function(){
-        setChips([{t:"Take me there",k:"go",go:true}]);
-        chips.firstChild.onclick=function(){
-          close();
-          var q=document.getElementById("quiz");
-          if(q) q.scrollIntoView({behavior:"smooth",block:"start"});
-        };
-      });
+      bot("Good. I will carry over what you have told me so nobody asks you the same thing twice. A few more questions on the page and someone will call you back today.",
+        function(){
+          setChips([{t:"Carry on",go:true,act:handoff}]);
+        });
     } else {
-      bot("No problem. The guide walks through all four routes with the numbers, and it is yours either way. Nobody will chase you.", function(){
-        setChips([{t:"Send me the guide",k:"g",go:true},{t:"Thanks, that's all",k:"end"}]);
-        chips.firstChild.onclick=function(){ close(); if(window.getGuide) window.getGuide({preventDefault:function(){}}); };
-        chips.lastChild.onclick=function(){ bot("Take care. We are here whenever you want to pick it back up."); setChips([]); };
-      });
+      bot("No problem. The guide walks through all four routes with the numbers, and it is yours either way. Nobody will chase you.",
+        function(){
+          setChips([
+            {t:"Send me the guide",go:true,act:function(){ close(); if(window.getGuide) window.getGuide({preventDefault:function(){}}); }},
+            {t:"Thanks, that's all",act:function(){ bot("Take care. We are here whenever you want to pick it back up."); }}
+          ]);
+        });
     }
   }
 
