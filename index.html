@@ -212,6 +212,22 @@ section{padding:80px 0}
 .card.sel .tag{background:rgba(255,255,255,.26);color:#fff}
 .card.sel .tick{background:#fff;border-color:#fff;color:var(--c)}
 
+/* Continue lives on the card the seller just tapped.
+   visibility rather than display, so selecting one does not jolt the grid. */
+.card-go{visibility:hidden;display:inline-flex;align-items:center;gap:11px;margin-top:22px;
+  background:var(--act);color:#fff;border:2px solid rgba(255,255,255,.55);
+  font-family:"Figtree",sans-serif;font-weight:800;font-size:16.5px;letter-spacing:-.01em;
+  padding:13px 22px 13px 26px;border-radius:999px;cursor:pointer;
+  box-shadow:0 6px 18px rgba(0,0,0,.20);
+  transition:background .16s,box-shadow .16s,transform .14s}
+.card.sel .card-go{visibility:visible}
+.card-go::after{content:"";width:9px;height:9px;border-top:2.5px solid currentColor;
+  border-right:2.5px solid currentColor;transform:rotate(45deg);margin-left:1px;
+  transition:transform .16s}
+.card-go:hover{background:var(--act-2);box-shadow:0 11px 24px rgba(0,0,0,.26);transform:translateY(-2px)}
+.card-go:hover::after{transform:rotate(45deg) translate(2px,-2px)}
+.card-go:active{transform:translateY(0);box-shadow:0 4px 12px rgba(0,0,0,.22)}
+.card-go:focus-visible{outline:3px solid #fff;outline-offset:3px}
 .multi-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
   margin-top:30px;padding-top:26px;border-top:2px solid var(--line)}
 .multi-bar .count{font-size:17px;font-weight:750;color:var(--ink-2)}
