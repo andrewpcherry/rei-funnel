@@ -1290,14 +1290,21 @@ function pickHtml(){
     +'combination usually matters more than any single one of them.</div><div class="cards">';
   Object.keys(BRANCHES).forEach(function(k){
     var b=BRANCHES[k], sel=has(k);
-    h+='<button class="card'+(sel?' sel':'')+'" style="--c:'+b.c+';--cs:'+b.cs+'" onclick="toggleSit(\''+k+'\')" '
-      +'aria-pressed="'+sel+'"><span class="tick">&check;</span>'
+    h+='<div class="card'+(sel?' sel':'')+'" style="--c:'+b.c+';--cs:'+b.cs+'" '
+      +'role="button" tabindex="0" aria-pressed="'+sel+'" '
+      +'onclick="toggleSit(\''+k+'\')" '
+      +'onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();toggleSit(\''+k+'\');}">'
+      +'<span class="tick">&check;</span>'
       +'<span class="tag">'+esc(b.tag)+'</span><h4>'+esc(b.card)+'</h4><p>'+esc(b.blurb)+'</p>'
-      +'<div class="also">'+esc(b.also)+'</div></button>';
+      +'<div class="also">'+esc(b.also)+'</div>'
+      +'<button type="button" class="card-go" onclick="event.stopPropagation();confirmSits();">Continue</button>'
+      +'</div>';
   });
   h+='</div><div class="multi-bar"><div class="count">'
-    +(n===0?"Tick at least one to carry on":n===1?"1 situation selected":n+" situations selected")
-    +'</div><button class="btn btn-g" onclick="confirmSits()"'+(n?"":" disabled")+'>Continue</button></div></div>';
+    +(n===0?"Tick everything that applies. A Continue button appears on each one you pick."
+       :n===1?"1 selected. Tick more if they apply, or press Continue on it."
+       :n+" selected. Press Continue on any one of them.")
+    +'</div></div></div>';
   return h;
 }
 

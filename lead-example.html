@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>What a lead looks like</title>
-<meta name="description" content="What arrives in the investor's CRM after a seller finishes the funnel: the situation stack, the ranked deal structures, the routing tier, every answer, and the raw payload.">
+<meta name="description" content="What arrives in the investor's CRM after a seller finishes the funnel: contact details, callback preference, the situations they ticked, how their answers score against each deal structure, every answer, and the raw payload.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@600;700;800;900&family=Figtree:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
@@ -116,12 +116,6 @@ p{margin:0}
   background:var(--tc-s);color:var(--tc)}
 
 /* verdict */
-.verdict{display:grid;gap:20px}
-@media(min-width:720px){.verdict{grid-template-columns:1fr 1fr}}
-.rec{border-radius:13px;padding:20px;border:2px solid var(--rc);background:var(--rc-s)}
-.rec .k{font-size:10.5px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:var(--rc)}
-.rec h3{margin-top:12px;font-size:28px;color:var(--ink);letter-spacing:-.03em}
-.rec p{margin-top:10px;font-size:14px;color:var(--ink-soft)}
 
 .bars{display:grid;gap:11px}
 .barrow .bl{display:flex;justify-content:space-between;align-items:baseline;gap:10px;
@@ -171,9 +165,9 @@ footer a{color:#A6B8CC}
 <div class="top"><div class="wrap">
   <span class="kicker">The investor side</span>
   <h1>What lands in your CRM when a seller finishes.</h1>
-  <p>The seller sees a set of options. You get the situation stack, the deal structures ranked against
-    their actual numbers, a routing tier that tells you whether to call now or drip, every answer they
-    gave, and the flags worth knowing before you dial.</p>
+  <p>The seller sees a set of options. You get their contact details and when they want calling, the
+    situations they ticked, how their answers score against each deal structure, every question they
+    answered, and the raw payload.</p>
   <div class="sample"><i></i> Sample records. Three leads, three different tiers. Click any of them.</div>
 </div></div>
 
@@ -220,12 +214,6 @@ var GLOW = {
   condition:"rgba(245,158,11,.28)", rental:"rgba(59,130,246,.30)",
   moving:"rgba(16,185,129,.28)",    comparing:"rgba(6,182,212,.28)"
 };
-var TIERNOTE = {
-  A:"Call today. Do not let this sit in a sequence.",
-  B:"Real situation with a blocker. Multi-touch sequence, call when the blocker clears.",
-  C:"No urgency. Send the guide, drip, no call task.",
-  X:"Routed out at the funnel. No lead was created."
-};
 
 var LEADS = [
 {
@@ -237,20 +225,9 @@ var LEADS = [
   situations:["inherited","deadline"], primary:"deadline",
   tierReason:"date inside 30 days",
   recommended:"takeover",
-  recWhy:"He owes close to what it is worth and the rate is 3.25 percent. There is no room in a cash purchase and no time for a listing. Taking over the note is the only structure that clears the auction date and leaves him with anything.",
   scores:{takeover:14, cash:1, ownerfinance:-5, listing:-9},
   combos:[{t:"An inherited property with a foreclosure clock on it",
     p:"The estate has to be able to convey title before anything closes, and the auction date does not pause for probate. Both clocks run at once."}],
-  flags:[
-    {k:"Confirm before you spend time", c:"var(--c-estate)",
-     t:"Probate is open, not finished. He says he is the executor. Ask for letters testamentary on the first call. Without them nothing can close no matter what is agreed."},
-    {k:"Three or more heirs", c:"var(--c-estate)",
-     t:"Every heir signs. He has not said whether they are aligned. That is the single thing most likely to kill this."},
-    {k:"The clock", c:"var(--c-clock)",
-     t:"Auction date inside 30 days and the lender conversation went nowhere. Reinstatement figure and the exact sale date are the first two things to get."},
-    {k:"Rate is the asset", c:"var(--c-fix)",
-     t:"3.25 percent on the existing note. That rate is worth more than the discount you would negotiate on a cash price."}
-  ],
   answers:[
     {g:"Foreclosure or a deadline", c:"var(--c-clock)", rows:[
       ["What is the pressure?","A notice of default or foreclosure filing"],
@@ -279,18 +256,9 @@ var LEADS = [
   situations:["rental","condition"], primary:"rental",
   tierReason:"can sign, 30 to 90 days",
   recommended:"cash",
-  recWhy:"Roof is gone, the tenant is behind, and she wants the money in one piece. She owes about half, so there is room for a cash number that still leaves her whole. The tenant does not have to move for it to close.",
   scores:{cash:8, takeover:-1, ownerfinance:-5, listing:-10},
   combos:[{t:"A rental that needs work with somebody living in it",
     p:"You cannot easily repair a property you cannot get into, and a lender will not fund an ordinary buyer for it in that condition. Selling as it stands, tenant included, is the shortest line."}],
-  flags:[
-    {k:"Do not promise vacant", c:"var(--c-rent)",
-     t:"Tenant is behind on rent, not out. Ask for the lease and the ledger before you price it. Arrears and deposit both land at closing."},
-    {k:"Roof, and no quote", c:"var(--c-fix)",
-     t:"She has a rough idea of the cost, not a number. Expect her figure to be low. Get eyes on it before anything in writing."},
-    {k:"Wants the lump sum", c:"var(--c-move)",
-     t:"She ruled out payments over time. Do not lead with a terms offer, it will read as you avoiding a real number."}
-  ],
   answers:[
     {g:"Rental property", c:"var(--c-rent)", rows:[
       ["What is the tenant situation?","Occupied and behind on rent"],
@@ -318,17 +286,8 @@ var LEADS = [
   situations:["comparing"], primary:"comparing",
   tierReason:"research stage",
   recommended:"listing",
-  recWhy:"Paid off, no condition problem, a year out, and he wants the top number. The funnel told him to use an agent, because on his numbers that is true. He got the guide and no call task was created.",
   scores:{listing:7, cash:6, ownerfinance:0, takeover:-6},
   combos:[],
-  flags:[
-    {k:"No call task", c:"var(--c-look)",
-     t:"He has not asked to be called and there is nothing urgent. Calling him now is how you become the company he warns people about."},
-    {k:"Worth keeping", c:"var(--c-move)",
-     t:"Paid off and a year out is a good future seller. He goes on the long drip, not the dial list."},
-    {k:"Cash is one point behind", c:"var(--c-fix)",
-     t:"Listing 7, cash 6. If his timeline moves in or he learns what showings involve, this flips. Worth a check-in in ninety days."}
-  ],
   answers:[
     {g:"Weighing it up", c:"var(--c-look)", rows:[
       ["What are you actually trying to work out?","What the house is genuinely worth"],
@@ -404,7 +363,7 @@ function payload(L){
 }
 
 function renderDetail(){
-  var L = LEADS[sel], R = STR[L.recommended];
+  var L = LEADS[sel];
   var h = '';
 
   /* identity */
@@ -425,18 +384,14 @@ function renderDetail(){
         return '<span style="--tc:'+SIT[k].c+';--tc-s:'+SIT[k].s+'">'+esc(SIT[k].label)+'</span>';
       }).join("")+'</div>'
     + '</div>'
-    + '<div class="card-b" style="border-top:1px solid var(--line);background:var(--panel-2)">'
-    + '<b style="font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-soft)">What to do with it</b>'
-    + '<p style="margin-top:7px;font-size:15px;font-weight:700">'+esc(TIERNOTE[L.tier])+'</p></div></div>';
+    + '</div>';
 
   /* verdict */
-  h += '<div class="card"><div class="card-h">The deal structures, scored against their answers</div>'
-    + '<div class="card-b"><div class="verdict">'
-    + '<div class="rec" style="--rc:'+R.c+';--rc-s:'+R.s+'"><div class="k">Recommended structure</div>'
-    + '<h3>'+esc(R.name)+'</h3><p>'+esc(L.recWhy)+'</p></div>'
-    + '<div>'+bars(L)+'<p class="note">Anything at zero or below was shown to the seller in the '
-    + '"what we would not push you towards" list, with the reason.</p></div>'
-    + '</div></div></div>';
+  h += '<div class="card"><div class="card-h">How their answers score against each structure</div>'
+    + '<div class="card-b">'+bars(L)
+    + '<p class="note">Scored from what the seller answered, nothing else. Anything at zero or below '
+    + 'was shown to them in the "what we would not push you towards" list, with the reason.</p>'
+    + '</div></div>';
 
   /* combos */
   if(L.combos.length){
@@ -447,12 +402,6 @@ function renderDetail(){
         }).join("")
       + '</div></div>';
   }
-
-  /* flags */
-  h += '<div class="card"><div class="card-h">Before you dial</div><div class="card-b">'
-    + '<ul class="flags">'+L.flags.map(function(f){
-        return '<li style="--fc:'+f.c+'"><div><b>'+esc(f.k)+'</b>'+esc(f.t)+'</div></li>';
-      }).join("")+'</ul></div></div>';
 
   /* answers */
   h += '<div class="card"><div class="card-h">Everything they answered</div><div class="card-b"><div class="ans">';
