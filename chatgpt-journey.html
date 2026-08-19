@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The ChatGPT journey</title>
-<meta name="description" content="The whole path, step by step: a homeowner asks ChatGPT how to sell, your ad sits inside the answer, the click carries their question into the funnel, four deal structures get scored in front of them, and a sorted record lands in your CRM.">
+<meta name="description" content="The whole path, step by step: a homeowner asks ChatGPT how to sell, your ad sits inside the answer, the page picks up their question, four deal structures get scored in front of them, and a sorted record lands in your CRM.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@600;700;800;900&family=Figtree:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
@@ -131,34 +131,12 @@ a{color:inherit}
   color:#fff;border-radius:999px;padding:10px 18px;font-size:13.5px;font-weight:750;text-decoration:none}
 .adslot .cta::after{content:"\2192";font-weight:600}
 
-.spec{display:grid;gap:9px;margin-top:14px}
-.spec .sr{display:flex;justify-content:space-between;align-items:baseline;gap:14px;
-  padding:9px 13px;border-radius:9px;background:var(--panel-2);font-size:13px}
-.spec .sr b{font-weight:750}
-.spec .sr em{font-style:normal;font-size:12.5px;color:var(--ink-soft)}
-.spec .sr.ok em{color:var(--act-2);font-weight:750}
-
 /* callouts */
 .call{border-radius:13px;padding:15px 17px;border:1.5px solid var(--cc);background:var(--cc-s);margin-top:18px}
 .call h5{font-size:11.5px;font-weight:900;letter-spacing:.13em;text-transform:uppercase;
   font-family:"Figtree",sans-serif;color:var(--cc-t)}
 .call p{margin-top:8px;font-size:14px;color:var(--cc-t)}
 .call p+p{margin-top:9px}
-
-/* url + params */
-.url{background:var(--navy-3);color:#B9CEE8;border-radius:12px;padding:16px 18px;overflow-x:auto;
-  font-family:"JetBrains Mono",ui-monospace,Menlo,monospace;font-size:12.5px;line-height:1.9;
-  word-break:break-all}
-.url .p{color:#FFCF5C} .url .v{color:#8FE9C4} .url .d{color:#7FA6CC}
-.params{width:100%;border-collapse:collapse;margin-top:16px;font-size:13.5px}
-.params th{text-align:left;font-size:10.5px;font-weight:900;letter-spacing:.13em;text-transform:uppercase;
-  color:var(--ink-soft);padding:0 12px 9px 0;border-bottom:1px solid var(--line)}
-.params td{padding:11px 12px 11px 0;border-bottom:1px solid var(--line);vertical-align:top}
-.params td:first-child{white-space:nowrap;font-family:"JetBrains Mono",ui-monospace,Menlo,monospace;
-  font-size:12.5px;color:var(--ink)}
-.params td:nth-child(2){font-weight:750;white-space:nowrap}
-.params td:last-child{color:var(--ink-soft)}
-@media(max-width:640px){.params td:last-child,.params th:last-child{display:none}}
 
 /* landing mock */
 .land{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:#fff}
@@ -274,10 +252,8 @@ footer a{color:var(--ink-2)}
     in a form. This is the whole path, step by step: <b>the question they ask, the ad that sits inside the
     answer, what the click carries with it, what the funnel does with them, and the record that lands in your
     CRM.</b> Pick a seller and the entire page follows that one person.</p>
-  <div class="note-pill"><i></i><span>Illustration, not a screenshot. The seller side is written the way
-    homeowners actually type. The ad unit is built to the field limits verified inside OpenAI Ads Manager on
-    2026-06-10: 50 characters on the line, 100 on the description, and the call to action is a separate button
-    field. The scores and the ruled-out reasons are the ones the live funnel produces.</span></div>
+  <div class="note-pill"><i></i><span>Sample sellers, written the way homeowners actually type. The scores,
+    the reasons and the record are the ones the live funnel produces.</span></div>
 </div></div>
 
 <div class="picker"><div class="wrap">
@@ -293,9 +269,9 @@ footer a{color:var(--ink-2)}
     <div><b>You arrive during the decision</b>
       <p>Search catches a homeowner once they know what to type. This catches the part before that, while they
         are still describing the problem in their own words and asking what their choices are.</p></div>
-    <div><b>Nothing about the ad is distress copy</b>
-      <p>Every line stays in calm comparison framing, which keeps it inside policy and keeps the honest tone
-        the funnel then delivers on. The conversation can be urgent. The ad never is.</p></div>
+    <div><b>It is yours, not rented</b>
+      <p>The funnel, the records, the phone numbers and the campaign accounts are built in your name and stay
+        with you. They keep working whether the ads are running that month or not.</p></div>
     <div><b>The lead sorts itself</b>
       <p>Tier, recommended structure, every answer, the situation combination and the source all arrive
         attached. You open your CRM to a call order, not a pile of names.</p></div>
@@ -315,13 +291,11 @@ footer a{color:var(--ink-2)}
 <script>
 /* ============================================================
    Three sellers. Each one is a complete path: the question they
-   type into ChatGPT, the ad from the launch set that their intent
-   cluster buys, the parameters the click carries, the answers they
-   give, and what the fit engine returns for those answers.
+   type into ChatGPT, the ad they see, the answers they give, and
+   what the fit engine returns for those answers.
 
    Scores and ruled-out wording match lead-example.html and the
-   engine in index.html. Ad lines and descriptions are from the
-   12-ad launch set, unedited.
+   engine in index.html.
    ============================================================ */
 
 var SIT = {
@@ -364,8 +338,6 @@ var J = [
   ad:{line:"What will you actually walk away with?",
       desc:"Compare how repairs, commissions, and timing affect your final net outcome.",
       cta:"Request My No-Pressure Review", tc:"var(--c-estate)"},
-  utm:{utm_source:"chatgpt", utm_medium:"cpc", utm_campaign:"seller_decision_dfw",
-       utm_content:"net_outcome_ad2", utm_term:"cost_and_net_outcome"},
   land:{eyebrow:"No pressure, no obligation",
         h:"See what you would actually be left with, on every route open to you.",
         p:"Answer a few questions about the property and your situation. You will see which ways of selling fit, which ones do not, and why. Nothing is sent to anybody until you ask for it."},
@@ -422,8 +394,6 @@ var J = [
   ad:{line:"Does your property need work?",
       desc:"You may still have options. Compare listing, as-is, and a no-pressure direct offer.",
       cta:"Compare Your Home Sale Options", tc:"var(--c-fix)"},
-  utm:{utm_source:"chatgpt", utm_medium:"cpc", utm_campaign:"seller_decision_dfw",
-       utm_content:"property_condition_ad1", utm_term:"property_condition"},
   land:{eyebrow:"Compare before you spend",
         h:"Before you put a new roof on it, see what the house is worth without one.",
         p:"Answer a few questions about the property and your situation. You will see which ways of selling fit, which ones do not, and why. Nothing is sent to anybody until you ask for it."},
@@ -479,8 +449,6 @@ var J = [
   ad:{line:"Just starting to explore your options?",
       desc:"Compare your realistic selling paths with a no-pressure review, no obligation.",
       cta:"Request My No-Pressure Review", tc:"var(--c-look)"},
-  utm:{utm_source:"chatgpt", utm_medium:"cpc", utm_campaign:"seller_decision_dfw",
-       utm_content:"early_research_ad2", utm_term:"early_decision_research"},
   land:{eyebrow:"No pressure, no obligation",
         h:"Work out which way of selling suits you, a year before you have to decide.",
         p:"Answer a few questions about the property and your situation. You will see which ways of selling fit, which ones do not, and why. Nothing is sent to anybody until you ask for it."},
@@ -564,42 +532,9 @@ function adUnit(P){
     + '<span class="cta">'+esc(P.ad.cta)+'</span></div>';
 }
 
-function adSpec(P){
-  return '<div class="spec">'
-    + '<div class="sr ok"><b>Line</b><em>'+P.ad.line.length+' of 50 characters</em></div>'
-    + '<div class="sr ok"><b>Description</b><em>'+P.ad.desc.length+' of 100 characters</em></div>'
-    + '<div class="sr"><b>Call to action</b><em>separate button field</em></div>'
-    + '<div class="sr"><b>Image</b><em>small companion, seen at thumbnail size</em></div>'
-    + '</div>';
-}
-
-function urlBlock(P){
-  var q = Object.keys(P.utm).map(function(k){
-    return '<span class="p">'+k+'</span><span class="d">=</span><span class="v">'+esc(P.utm[k])+'</span>';
-  }).join('<span class="d">&amp;</span>');
-  return '<div class="url"><span class="d">https://</span>yourcompany.com<span class="d">/sell</span>'
-    + '<span class="d">?</span>'+q+'</div>';
-}
-
-var PARAM_MEANS = {
-  utm_source:"Which platform sent them. Splits ChatGPT away from Meta and everything else in your reporting.",
-  utm_medium:"Paid click rather than organic, so the two never get counted together.",
-  utm_campaign:"The market this campaign is buying, so several markets stay separate.",
-  utm_content:"Which of the twelve ads in the launch set they clicked. This is what tells you which ad produces conversations rather than clicks.",
-  utm_term:"The intent cluster, and the only one the page itself reads. It is what the top of the funnel adapts to before the seller does anything."
-};
-
-function paramTable(P){
-  var rows = Object.keys(P.utm).map(function(k){
-    return '<tr><td>'+k+'</td><td>'+esc(P.utm[k])+'</td><td>'+esc(PARAM_MEANS[k])+'</td></tr>';
-  }).join("");
-  return '<table class="params"><thead><tr><th>Parameter</th><th>Value</th><th>What it buys you</th></tr></thead>'
-    + '<tbody>'+rows+'</tbody></table>';
-}
-
 function landingMock(P){
   return '<div class="land"><div class="lbar"><i></i><i></i><i></i>'
-    + '<span>yourcompany.com/sell?utm_term='+esc(P.utm.utm_term)+'</span></div>'
+    + '<span>yourcompany.com/sell</span></div>'
     + '<div class="lb"><span class="eyebrow">'+esc(P.land.eyebrow)+'</span>'
     + '<h3>'+esc(P.land.h)+'</h3><p class="lp">'+esc(P.land.p)+'</p>'
     + '<span class="fakebtn">Start</span></div></div>';
@@ -666,8 +601,7 @@ function recordBlock(P){
     + '<div><b>Best time</b>'+esc(P.bestTime)+'</div>'
     + '<div><b>Prefers</b>'+esc(P.pref)+'</div>'
     + '<div><b>Recommended</b>'+esc(STR[P.recommended].name)+'</div>'
-    + '<div><b>Source</b>'+esc(P.utm.utm_source+" / "+P.utm.utm_medium)+'</div>'
-    + '<div><b>Ad</b>'+esc(P.utm.utm_content)+'</div>'
+    + '<div><b>Source</b>ChatGPT</div>'
     + '</div></div></div>'
     + '<div class="rb"><div class="sub-h">Tags written on arrival</div>'
     + '<div class="taglist"><span>'+tags.join('</span><span>')+'</span></div>'
@@ -710,54 +644,38 @@ function renderStages(){
     + '<b>the decision process, not the search that comes after it.</b></p>'
     + '<p class="body-p">A seller at this point is not in anybody\'s CRM. They have not called an investor, they '
     + 'have not filled in a cash offer form, and they are not on a list you can buy. They are working out what to do.</p>'
-    + call("var(--c-look)","var(--c-look-s)","#0A4E5A","The line worth stealing",
-        "Google captures the search. Meta creates the demand. ChatGPT captures the decision process before either one.")
+    + call("var(--c-look)","var(--c-look-s)","#0A4E5A","Where this sits",
+        "Google captures the search. Meta creates the demand. This captures the decision process before either one.")
     + '</div></div>');
 
   h += stage(2,
     "Your ad sits inside the answer.",
     "Not a banner beside it and not an interruption before it. A short line, a short description, one button, "
     + "and a small image, in the place the homeowner is already reading.",
-    '<div class="split"><div>'+adUnit(P)
-    + '<p class="body-p" style="margin-top:16px;font-size:14px;color:var(--ink-soft)">The unit above is ad '
-    + '<span class="mono">'+esc(P.utm.utm_content)+'</span> from the twelve ad launch set, word for word.</p></div>'
-    + '<div><div class="sub-h">Built to the real field limits</div>'+adSpec(P)
-    + '<p class="body-p" style="margin-top:16px">Fifty characters is not a headline, it is a sentence fragment. '
-    + 'It has to name the decision the homeowner is already making, because there is no room to do anything else. '
-    + 'That constraint is why the ads are written from intent clusters rather than from offers.</p>'
-    + call("var(--c-fix)","var(--c-fix-s)","#7A4A00","Look at what the ad does not say",
-        "The conversation you just read is urgent. The ad is not. There is no cash, no fast, no guarantee and no "
-        + "foreclosure language anywhere in the launch set, deliberately.",
-        "That is what keeps the campaign inside policy, and it is also what keeps the promise honest. The ad "
-        + "offers a comparison, and the page that follows actually delivers one, including the times it tells "
-        + "them to use an agent.")
+    '<div class="split"><div>'+adUnit(P)+'</div>'
+    + '<div><div class="sub-h">Why it gets clicked</div>'
+    + '<p class="body-p">It does not interrupt anything. The homeowner is mid decision, and the ad names the exact '
+    + 'thing they are weighing up, in the same calm language they are already reading.</p>'
+    + '<p class="body-p">There is no price, no offer and no pressure in it. <b>The only thing being offered is a '
+    + 'comparison,</b> which is what the homeowner came looking for in the first place.</p>'
+    + '<p class="body-p">It carries your company name, and so does everything that happens after the click.</p>'
     + '</div></div>');
 
   h += stage(3,
-    "The click carries their question with it.",
-    "This is the part most funnels throw away. The intent cluster that produced the click travels into the page "
-    + "and stays attached to the seller all the way into your CRM.",
-    urlBlock(P) + paramTable(P)
-    + '<p class="body-p" style="margin-top:18px">Six weeks in, this is the table that decides where the budget '
-    + 'goes. Not which ad got clicks, but <b>which homeowner question produced a conversation you could actually '
-    + 'do something with.</b> Two of the twelve will earn most of the spend. You cannot guess which two, and you '
-    + 'cannot find out without this.</p>');
-
-  h += stage(4,
     "The page opens already knowing which question they asked.",
-    "One parameter, read before the seller does anything. The top of the page answers the thing they came in "
-    + "asking rather than showing everybody the same headline.",
+    "The click brings the homeowner's question with it, so the top of the page answers that, rather than showing "
+    + "everybody the same headline.",
     '<div class="split">'+landingMock(P)
     + '<div><div class="sub-h">Why this matters more than the design</div>'
-    + '<p class="body-p">The most expensive mistake in paid seller traffic is a message gap: the ad promises to '
-    + 'help with one thing, the page talks about another, and the click is paid for and wasted in about four seconds.</p>'
-    + '<p class="body-p">Here <span class="mono">utm_term='+esc(P.utm.utm_term)+'</span> sets the top fold, so '
-    + esc(P.pill)+' lands on the exact question just asked, in the same calm language the ad used. Everything '
-    + 'below the fold stays the same for everybody.</p>'
+    + '<p class="body-p">The most expensive mistake in paid seller traffic is a gap between the two: the ad '
+    + 'promises to help with one thing, the page talks about another, and the click is paid for and wasted in '
+    + 'about four seconds.</p>'
+    + '<p class="body-p">'+esc(P.pill)+' lands on the exact question just asked, in the same language the ad used. '
+    + 'Everything below the fold stays the same for everybody.</p>'
     + '<p class="body-p">No offer, no price and no phone number is pushed at this point. The only thing being '
     + 'asked for is a few answers.</p></div></div>');
 
-  h += stage(5,
+  h += stage(4,
     "They tick every situation that applies, not one.",
     "Real sellers are never a single tidy category. The inherited house is also the one that needs work. The "
     + "rental is also the one with a deadline. Forcing one choice is what makes seller forms lie.",
@@ -778,7 +696,7 @@ function renderStages(){
     + '<p class="body-p" style="margin-top:16px">Every answer on the left is stored against the record. When you '
     + 'call, you are not asking a stranger to start from the beginning. You already have it.</p></div></div>');
 
-  h += stage(6,
+  h += stage(5,
     "Three money questions everybody answers.",
     "Situation tells you what is going on. These three tell you whether a deal exists at all, and which shape it "
     + "would have to take.",
@@ -792,7 +710,7 @@ function renderStages(){
     + '<p class="body-p">Sellers answer them because by this point the page has earned it. They have watched it '
     + 'take their situation seriously for several questions already.</p></div></div>');
 
-  h += stage(7,
+  h += stage(6,
     "Four structures get scored in front of them.",
     "This is the part that separates the funnel from every cash offer form in the market. The seller sees which "
     + "routes fit, which ones do not, and the reason for each. The reasons are written for them, not for you.",
@@ -814,7 +732,7 @@ function renderStages(){
         + "route and the rest is a measure of how clean the deal is before you dial.")
     + '</div></div>');
 
-  h += stage(8,
+  h += stage(7,
     "They say how and when they want to be called.",
     "The last screen asks for the callback number, a time that suits them, and whether they would rather have a "
     + "call or a text first. Three fields, after the value has already been delivered.",
@@ -832,10 +750,10 @@ function renderStages(){
     + 'A seller who asked for a text at a stated time answers at a completely different rate to one who gets a '
     + 'surprise call at nine in the morning.</p></div></div>');
 
-  h += stage(9,
+  h += stage(8,
     "The record lands sorted, not as a name and a number.",
     "Everything the seller told the page arrives with them: tier, recommended structure, situation tags, every "
-    + "answer, the ad that produced them and their own words at the end.",
+    + "answer, where they came from, and their own words at the end.",
     '<div class="split wide-l"><div>'+recordBlock(P)+'</div>'
     + '<div><div class="sub-h">What fires the moment it arrives</div>'+firesBlock(P)
     + '<p class="body-p" style="margin-top:18px">Tier A is call now. Tier B is a real opportunity with a blocker '
@@ -845,7 +763,7 @@ function renderStages(){
     + 'Open the full lead record for '+esc(P.name)+'</a>, including the raw payload your CRM receives.</p>'
     + '</div></div>');
 
-  h += stage(10,
+  h += stage(9,
     "The first call starts three steps in.",
     "You are not qualifying on this call. That already happened. You are confirming what the record says and "
     + "talking about the structure the seller has already seen recommended to them.",
@@ -854,7 +772,7 @@ function renderStages(){
     + '<h5>'+esc(P.name)+' &middot; Tier '+P.tier+'</h5><p>'+esc(P.dial)+'</p></div></div>'
     + '<div><div class="sub-h">What the whole path bought you</div>'
     + '<p class="body-p">A homeowner who was in a conversation, not a search. An ad that met them there in '
-    + 'language that stays inside policy. A page that answered the question they arrived with. Four structures '
+    + 'their own language. A page that answered the question they arrived with. Four structures '
     + 'scored honestly in front of them, including the ones you would not do. A stated time and channel to reach '
     + 'them on. And a record that sorted itself before you opened it.</p>'
     + '<p class="body-p">Every part of that is an asset that keeps working whether the ad account is switched on '
